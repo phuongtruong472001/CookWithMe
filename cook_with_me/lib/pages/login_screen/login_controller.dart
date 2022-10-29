@@ -13,7 +13,6 @@ class LoginController extends GetxController {
     // TODO: implement onInit
     super.onInit();
   }
-
   @override
   void onClose() {
     // TODO: implement onClose
