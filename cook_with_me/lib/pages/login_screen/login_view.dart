@@ -1,3 +1,4 @@
+import 'package:cook_with_me/fonts_and_colors.dart';
 import 'package:cook_with_me/pages/login_screen/login_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -19,23 +20,21 @@ class LoginView extends GetView<LoginController> {
         body: SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Stack(
+            alignment: Alignment.bottomLeft,
             children: [
-              SizedBox(
-                height: sizeDefault.height * 0.2,
+              Positioned(
+                top: Get.height / 11,
+                child: Text(
+                  'Welcome\nBack',
+                  style: TextStyle(
+                      fontFamily: FontsAndColors.bold,
+                      fontSize: 28,
+                      color: Colors.black),
+                ),
               ),
-              const Text(
-                'Welcome to \nSmart Home',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                    color: Colors.black),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
+             
               Row(
                 children: [
                   const Text(
@@ -150,8 +149,10 @@ class LoginView extends GetView<LoginController> {
             letterSpacing: 0.9),
         decoration: InputDecoration(
           labelText: lable,
-          labelStyle: const TextStyle(
-              fontWeight: FontWeight.w400, fontSize: 19, color: Colors.grey),
+          labelStyle: TextStyle(
+              fontFamily: FontsAndColors.bold,
+              fontSize: 14,
+              color: Colors.black),
           focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Color(0xFF111111))),
         ),

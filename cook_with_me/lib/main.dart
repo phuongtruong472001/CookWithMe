@@ -2,6 +2,7 @@ import 'package:cook_with_me/pages/login_screen/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 void main() async {
   await GetStorage.init();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: HexColor("1E1E1E")
       ),
       initialRoute: '/login',
       debugShowCheckedModeBanner: false,
