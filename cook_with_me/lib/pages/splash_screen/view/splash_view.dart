@@ -15,26 +15,50 @@ class SplashPage extends GetView<SplashController> {
         // height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage("https://khoinguonsangtao.vn/wp-content/uploads/2022/08/hinh-anh-anime-nu-1.jpg"),
-            fit: BoxFit.cover
-            ),
+              image: AssetImage("assets/images/bg_splash_screen.png"),
+              fit: BoxFit.cover),
         ),
         child: Stack(
-          children: const [
+          children: [
             Positioned(
               bottom: 100,
-              left: 150,
-              right: 150,
+              left: 0,
+              right: 0,
               height: 50,
-              child: Text("sjdfsd"),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                    color: const Color(0xFFFD1616),
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Center(
+                    child: Text(
+                  "LOGIN",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
               ),
+            ),
             Positioned(
               bottom: 200,
-              left: 150,
-              right: 150,
+              left: 0,
+              right: 0,
               height: 50,
-              child: Text("sfdfgfhghg"),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Center(
+                    child: Text(
+                  "SIGN UP",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
               ),
+            ),
           ],
         ),
       ),
