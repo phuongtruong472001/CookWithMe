@@ -43,30 +43,31 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 ),
               ),
               Positioned(
-                  bottom: Get.height / 6,
-                  child: SizedBox(
-                    width: Get.width,
-                    child: Center(
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.black87,
-                          fixedSize: Size(Get.width - 32, 50),
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
+                bottom: Get.height / 6,
+                child: SizedBox(
+                  width: Get.width,
+                  child: Center(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.black87,
+                        fixedSize: Size(Get.width - 32, 50),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
-                        onPressed: () {
-                          if (controller.key.currentState!.validate()) {
-                            controller.key.currentState!.save();
-                          }
-                        },
-                        child: const Text('Login'),
                       ),
+                      onPressed: () {
+                        if (controller.key.currentState!.validate()) {
+                          controller.key.currentState!.save();
+                          showAlertDialog(context);
+                        }
+                      },
+                      child: const Text('Login'),
                     ),
-                  ),),
-                  Positioned(child: Container())
+                  ),
+                ),
+              ),
+              Positioned(child: Container())
             ],
           ),
         ),
@@ -74,11 +75,41 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
     );
   }
 
-  String validatePassword(String value) {
-    if (value.isEmpty) {
-      return "Please enter the name !";
-    }
-    return "";
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Continue"),
+      onPressed: () {
+        if (controller.key.currentState!.validate()) {
+          controller.key.currentState!.save();
+        }
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("OTP code"),
+      content: TextField(
+        controller: controller.otpController.value,
+        keyboardType: TextInputType.number,
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   Widget editEmail(TextEditingController emailController) {
@@ -89,6 +120,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: TextFormField(
             controller: emailController,
+            keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: HexColor("#000000"),
               fontFamily: 'Nunito-Semibold',
