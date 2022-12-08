@@ -1,4 +1,5 @@
 import 'package:cook_with_me/fonts_and_colors.dart';
+import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/pages/login_screen/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,6 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    // final sizeDefault = MediaQuery.of(context).size;
-    // bool isLoading = false;
     return Scaffold(
       body: Container(
           constraints: const BoxConstraints.expand(),
@@ -51,29 +50,9 @@ class LoginView extends GetView<LoginController> {
                       const SizedBox(
                         height: 50,
                       ),
-                      TextFormField(
-                        style: const TextStyle(color: Colors.red),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Email",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 35),
-                        child: TextFormField(
+                      Obx(
+                        () => TextFormField(
+                          controller: controller.emailController.value,
                           style: const TextStyle(color: Colors.red),
                           decoration: InputDecoration(
                             filled: true,
@@ -82,7 +61,7 @@ class LoginView extends GetView<LoginController> {
                                 borderSide: const BorderSide(
                                     color: Colors.white, width: 1),
                                 borderRadius: BorderRadius.circular(10)),
-                            hintText: "Password",
+                            hintText: "Email",
                             enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Colors.white, width: 1),
@@ -91,6 +70,32 @@ class LoginView extends GetView<LoginController> {
                                 borderSide: const BorderSide(
                                     color: Colors.white, width: 1),
                                 borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 35),
+                        child: Obx(
+                          () => TextFormField(
+                            controller: controller.passController.value,
+                            style: const TextStyle(color: Colors.red),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 1),
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: "Password",
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 1),
+                                  borderRadius: BorderRadius.circular(10)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 1),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
                           ),
                         ),
                       ),
@@ -120,26 +125,36 @@ class LoginView extends GetView<LoginController> {
                                   color: Colors.white,
                                   fontSize: 15,
                                   decoration: TextDecoration.underline),
-                            )
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(
                         height: 100,
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        width: double.infinity,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      GestureDetector(
+                        onTap: () async {
+                          bool x = await CallApi.login(
+                              controller.emailController.value.text,
+                              controller.passController.value.text);
+                          if (x) {
+                            Get.toNamed("/main_tabbar");
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            "Login my account",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
                         ),
-                        child: const Center(
-                            child: Text(
-                          "Login my account",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
                       ),
                       const SizedBox(
                         height: 50,
