@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/main_tabbar',
-      initialBinding: TabBarHomeBinding(),
+      initialRoute: '/splash',
+      initialBinding: SplashBinding(),
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
