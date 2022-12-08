@@ -6,6 +6,7 @@ import 'package:cook_with_me/pages/favorite/binding/favorite_binding.dart';
 import 'package:cook_with_me/pages/favorite/view/favorite_view.dart';
 import 'package:cook_with_me/pages/forgot_password/binding/forgot_password_binding.dart';
 import 'package:cook_with_me/pages/forgot_password/view/forgot_password_view.dart';
+import 'package:cook_with_me/pages/login_screen/login_binding.dart';
 import 'package:cook_with_me/pages/login_screen/login_view.dart';
 import 'package:cook_with_me/pages/settings/binding/settings_binding.dart';
 import 'package:cook_with_me/pages/settings/view/settings_view.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/login",
           page: () => LoginView(),
+          binding: LoginBinding(),
         ),
         GetPage(
             name: "/splash",
