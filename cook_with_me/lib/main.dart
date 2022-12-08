@@ -16,6 +16,7 @@ import 'package:cook_with_me/pages/tab_bar_home/view/tab_bar_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 void main() async {
   await GetStorage.init();
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
       initialRoute: '/detail_item',
       initialBinding: DetailItemBinding(),
@@ -57,25 +59,21 @@ class MyApp extends StatelessWidget {
           page: () => LoginView(),
         ),
         GetPage(
-          name: "/splash",
-          page: () => const SplashPage(),
-          binding: SplashBinding()
-        ),
-         GetPage(
-          name: "/main_tabbar",
-          page: () => const TabBarHomePage(),
-          binding: TabBarHomeBinding()
-        ),
-         GetPage(
-          name: "/favorite",
-          page: () =>  FavoritePage(),
-          binding: FavoriteBinding()
-        ),
+            name: "/splash",
+            page: () => const SplashPage(),
+            binding: SplashBinding()),
         GetPage(
-          name: "/detail_item",
-          page: () =>  DetailItemPage(),
-          binding: DetailItemBinding()
-        ),
+            name: "/main_tabbar",
+            page: () => const TabBarHomePage(),
+            binding: TabBarHomeBinding()),
+        GetPage(
+            name: "/favorite",
+            page: () => FavoritePage(),
+            binding: FavoriteBinding()),
+        GetPage(
+            name: "/detail_item",
+            page: () => const DetailItemPage(),
+            binding: DetailItemBinding()),
       ],
     );
   }
