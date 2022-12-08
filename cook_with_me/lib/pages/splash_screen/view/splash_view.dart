@@ -3,6 +3,8 @@ import 'package:cook_with_me/pages/splash_screen/controller/splash_controller.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../model/call_api.dart';
+
 class SplashPage extends GetView<SplashController> {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -26,7 +28,9 @@ class SplashPage extends GetView<SplashController> {
               right: 0,
               height: 50,
               child: GestureDetector(
-                onTap: () =>Get.toNamed("/login"),
+                onTap: () {
+                  Get.toNamed("/login");
+                },
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   width: double.infinity,
