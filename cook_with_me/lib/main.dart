@@ -1,3 +1,5 @@
+import 'package:cook_with_me/pages/add_post/binding/add_post_binding.dart';
+import 'package:cook_with_me/pages/add_post/view/add_post_view.dart';
 import 'package:cook_with_me/pages/change_password/binding/change_password_binding.dart';
 import 'package:cook_with_me/pages/change_password/view/change_password_view.dart';
 import 'package:cook_with_me/pages/detail_item/binding/detail_item_binding.dart';
@@ -76,6 +78,10 @@ class MyApp extends StatelessWidget {
             name: "/detail_item",
             page: () => const DetailItemPage(),
             binding: DetailItemBinding()),
+        GetPage(
+            name: "/add_post",
+            page: () => const AddPostPage(),
+            binding: AddPostBinding()),
       ],
     );
   }
