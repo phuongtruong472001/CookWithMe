@@ -1,7 +1,6 @@
 import 'package:cook_with_me/fonts_and_colors.dart';
 import 'package:cook_with_me/pages/login_screen/login_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -299,7 +298,7 @@ class LoginView extends GetView<LoginController> {
         decoration: InputDecoration(
           labelText: lable,
           labelStyle: TextStyle(
-              fontFamily: FontsAndColors.bold,
+              fontFamily: FontsAndColors.extrabold,
               fontSize: 14,
               color: Colors.black),
           focusedBorder: const UnderlineInputBorder(
