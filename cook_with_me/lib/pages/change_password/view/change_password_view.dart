@@ -10,14 +10,13 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Form(
-          key: controller.key,
-          child: Stack(
-            children: [
-              Positioned(
-                top: 20,
-                child: SizedBox(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Form(
+            key: controller.key,
+            child: Column(
+              children: [
+                SizedBox(
                   width: Get.width,
                   height: 80,
                   child: Row(
@@ -35,10 +34,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                     ],
                   ),
                 ),
-              ),
-              Positioned(
-                top: Get.height / 4,
-                child: SizedBox(
+                SizedBox(
                   height: Get.height / 2,
                   width: Get.width,
                   child: Obx(() => Column(
@@ -53,10 +49,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                         ],
                       )),
                 ),
-              ),
-              Positioned(
-                bottom: Get.height / 6,
-                child: SizedBox(
+                SizedBox(
                   width: Get.width,
                   child: Center(
                     child: TextButton(
@@ -77,9 +70,8 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                     ),
                   ),
                 ),
-              ),
-              Positioned(child: Container())
-            ],
+              ],
+            ),
           ),
         ),
       ),

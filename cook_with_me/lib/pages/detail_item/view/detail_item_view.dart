@@ -108,13 +108,12 @@ red pepper flakes (optional)''',
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 100, top: 10),
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Container(
-                        height: 100,
-                        color: Colors.blueAccent,
-                      ),
+                      padding:
+                          const EdgeInsets.only(bottom: 8, left: 16, right: 16),
+                      child: item(),
                     );
                   },
                   itemCount: 10,
@@ -135,11 +134,38 @@ red pepper flakes (optional)''',
                 ),
               ),
               onPressed: () {},
-              child: const Text('WATCH VIDEO'),
+              child: Text(
+                'WATCH VIDEO',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           )
         ],
       ),
+    );
+  }
+
+  Widget item() {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 200,
+        ),
+        Text(
+          '''To make this spaghetti sauce, you’ll sauté chopped onion, minced garlic, lean ground beef, and classic .''',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontFamily: FontsAndColors.regular,
+            fontWeight: FontWeight.w400,
+          ),
+        )
+      ],
     );
   }
 }

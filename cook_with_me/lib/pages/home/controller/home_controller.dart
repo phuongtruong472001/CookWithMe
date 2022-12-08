@@ -1,18 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-
-    @override
-    void onInit() {
+  var searchController = TextEditingController().obs;
+  @override
+  void onInit() {
     super.onInit();
-    }
+  }
 
-    @override
-    void onReady() {  }
+  @override
+  void onReady() {}
 
-    @override
-    void onClose() { 
-super.onClose(); 
- }
-
-   }
+  @override
+  void onClose() {
+    super.onClose();
+  }
+}

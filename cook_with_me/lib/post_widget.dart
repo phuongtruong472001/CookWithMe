@@ -18,7 +18,10 @@ class PostWidget extends GetView<PostWidgetController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () => Get.toNamed("/detail_item"),
       child: Container(
+        height: 150,
+        width: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,

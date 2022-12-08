@@ -121,7 +121,7 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
         () => IndexedStack(
           index: controller.currentIndex.value,
           children: [
-            const HomePage(),
+             HomePage(),
             FavoritePage(),
             const AllFoodPage(),
             const SettingsPage(),
