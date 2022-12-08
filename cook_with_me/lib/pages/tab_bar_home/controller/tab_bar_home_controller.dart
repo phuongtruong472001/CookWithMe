@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
 
-import '../../../model/post.dart';
-
-class FavoriteController extends GetxController {
-  var listFavorites = List<Post>.empty().obs;
-  RxInt lenght = 10.obs;
+class TabBarHomeController extends GetxController {
+  RxInt currentIndex = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +13,9 @@ class FavoriteController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void onItemTapped(int index) {
+    currentIndex.value = index;
   }
 }
