@@ -1,11 +1,12 @@
+import 'package:cook_with_me/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controller/favorite_controller.dart';
 
 class FavoritePage extends GetView<FavoriteController> {
-   FavoritePage({Key? key}) : super(key: key){
-     Get.lazyPut<FavoriteController>(() => FavoriteController());
+  FavoritePage({Key? key}) : super(key: key) {
+    Get.lazyPut<FavoriteController>(() => FavoriteController());
   }
 
   @override
@@ -32,12 +33,10 @@ class FavoritePage extends GetView<FavoriteController> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 16.0,
                             mainAxisSpacing: 16.0,
-                            mainAxisExtent: 176),
+                            mainAxisExtent: 150),
                     itemCount: controller.lenght.value,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        color: Colors.red,
-                      );
+                      return PostWidget();
                     }),
               ),
             ),
