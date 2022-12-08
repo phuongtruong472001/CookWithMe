@@ -23,7 +23,9 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                        },
                         icon: const Icon(Icons.arrow_back_ios),
                       ),
                       const Text(

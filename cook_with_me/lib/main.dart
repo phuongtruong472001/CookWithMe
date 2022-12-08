@@ -1,5 +1,9 @@
 import 'package:cook_with_me/pages/change_password/binding/change_password_binding.dart';
 import 'package:cook_with_me/pages/change_password/view/change_password_view.dart';
+import 'package:cook_with_me/pages/detail_item/binding/detail_item_binding.dart';
+import 'package:cook_with_me/pages/detail_item/view/detail_item_view.dart';
+import 'package:cook_with_me/pages/favorite/binding/favorite_binding.dart';
+import 'package:cook_with_me/pages/favorite/view/favorite_view.dart';
 import 'package:cook_with_me/pages/forgot_password/binding/forgot_password_binding.dart';
 import 'package:cook_with_me/pages/forgot_password/view/forgot_password_view.dart';
 import 'package:cook_with_me/pages/login_screen/login_view.dart';
@@ -7,6 +11,8 @@ import 'package:cook_with_me/pages/settings/binding/settings_binding.dart';
 import 'package:cook_with_me/pages/settings/view/settings_view.dart';
 import 'package:cook_with_me/pages/splash_screen/binding/splash_binding.dart';
 import 'package:cook_with_me/pages/splash_screen/view/splash_view.dart';
+import 'package:cook_with_me/pages/tab_bar_home/binding/tab_bar_home_binding.dart';
+import 'package:cook_with_me/pages/tab_bar_home/view/tab_bar_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -27,8 +33,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/settings',
-      initialBinding: SettingsBinding(),
+      initialRoute: '/detail_item',
+      initialBinding: DetailItemBinding(),
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
@@ -54,6 +60,21 @@ class MyApp extends StatelessWidget {
           name: "/splash",
           page: () => const SplashPage(),
           binding: SplashBinding()
+        ),
+         GetPage(
+          name: "/main_tabbar",
+          page: () => const TabBarHomePage(),
+          binding: TabBarHomeBinding()
+        ),
+         GetPage(
+          name: "/favorite",
+          page: () =>  FavoritePage(),
+          binding: FavoriteBinding()
+        ),
+        GetPage(
+          name: "/detail_item",
+          page: () =>  DetailItemPage(),
+          binding: DetailItemBinding()
         ),
       ],
     );
