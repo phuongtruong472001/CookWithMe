@@ -8,7 +8,7 @@ import '../controller/home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
   HomePage({Key? key}) : super(key: key) {
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.put(HomeController());
   }
 
   @override
@@ -53,19 +53,20 @@ class HomePage extends GetView<HomeController> {
               ),
               SizedBox(
                 height: 170,
-                child: ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: PostWidget(),
-                    );
-                  },
-                ),
+                child: Obx(() => ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      itemCount: controller.listPosts.length ,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: PostWidget(
+                              post: controller.listPosts[index],
+                            ));
+                      },
+                    )),
               ),
               Padding(
                 padding:
@@ -96,22 +97,26 @@ class HomePage extends GetView<HomeController> {
               ),
               SizedBox(
                 height: 330,
-                child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 4, bottom: 20),
-                    //physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16.0,
-                            mainAxisSpacing: 16.0,
-                            mainAxisExtent: 150),
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      return PostWidget();
-                    }),
+                child: Obx(
+                  () => GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 4, bottom: 20),
+                      //physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16.0,
+                              mainAxisSpacing: 16.0,
+                              mainAxisExtent: 150),
+                      itemCount: controller.listPosts.length ,
+                      itemBuilder: (BuildContext context, int index) {
+                        return PostWidget(
+                          post: controller.listPosts[index],
+                        );
+                      }),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -144,17 +149,21 @@ class HomePage extends GetView<HomeController> {
               ),
               SizedBox(
                 height: 150,
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: PostWidget(),
-                    );
-                  },
+                child: Obx(
+                  () => ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: controller.listPosts.length ,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: PostWidget(
+                          post: controller.listPosts[index],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
