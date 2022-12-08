@@ -10,7 +10,7 @@ class Post {
   List<Steps>? steps;
   List<Ingredients>? ingredients;
   String? videoLink;
-  List<Category>? categories;
+  //List<Category>? categories;
   String? createdAt;
   String? updatedAt;
   int? iV;
@@ -23,64 +23,64 @@ class Post {
       this.steps,
       this.ingredients,
       this.videoLink,
-      this.categories,
+      //this.categories,
       this.createdAt,
       this.updatedAt,
       this.iV});
 
-  // Post.fromJson(Map<String, dynamic> json) {
-  //   sId = json['_id'];
-  //   author =
-  //       json['author'] != null ?  Author.fromJson(json['author']) : null;
-  //   title = json['title'];
-  //   imageCover = json['image_cover'];
-  //   if (json['steps'] != null) {
-  //     steps = <Steps>[];
-  //     json['steps'].forEach((v) {
-  //       steps!.add( Steps.fromJson(v));
-  //     });
-  //   }
-  //   if (json['ingredients'] != null) {
-  //     ingredients = <Ingredients>[];
-  //     json['ingredients'].forEach((v) {
-  //       ingredients!.add( Ingredients.fromJson(v));
-  //     });
-  //   }
-  //   videoLink = json['video_link'];
-  //   if (json['categories'] != null) {
-  //     categories = [];
-  //     json['categories'].forEach((v) {
-  //       categories!.add( [].fromJson(v));
-  //     });
-  //   }
-  //   createdAt = json['createdAt'];
-  //   updatedAt = json['updatedAt'];
-  //   iV = json['__v'];
-  // }
+  Post.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    author =
+        json['author'] != null ?  Author.fromJson(json['author']) : null;
+    title = json['title'];
+    imageCover = json['image_cover'];
+    if (json['steps'] != null) {
+      steps = <Steps>[];
+      json['steps'].forEach((v) {
+        steps!.add( Steps.fromJson(v));
+      });
+    }
+    if (json['ingredients'] != null) {
+      ingredients = <Ingredients>[];
+      json['ingredients'].forEach((v) {
+        ingredients!.add( Ingredients.fromJson(v));
+      });
+    }
+    videoLink = json['video_link'];
+    // if (json['categories'] != null) {
+    //   categories = [];
+    //   // json['categories'].forEach((v) {
+    //   //   categories!.add( [].fromJson(v));
+    //   // });
+    // }
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data =  Map<String, dynamic>();
-  //   data['_id'] = sId;
-  //   if (author != null) {
-  //     data['author'] = author!.toJson();
-  //   }
-  //   data['title'] = title;
-  //   data['image_cover'] = imageCover;
-  //   if (steps != null) {
-  //     data['steps'] = steps!.map((v) => v.toJson()).toList();
-  //   }
-  //   if (ingredients != null) {
-  //     data['ingredients'] = ingredients!.map((v) => v.toJson()).toList();
-  //   }
-  //   data['video_link'] = videoLink;
-  //   if (categories != null) {
-  //     data['categories'] = categories!.map((v) => v.toJson()).toList();
-  //   }
-  //   data['createdAt'] = createdAt;
-  //   data['updatedAt'] = updatedAt;
-  //   data['__v'] = iV;
-  //   return data;
-  // }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['_id'] = sId;
+    if (author != null) {
+      data['author'] = author!.toJson();
+    }
+    data['title'] = title;
+    data['image_cover'] = imageCover;
+    if (steps != null) {
+      data['steps'] = steps!.map((v) => v.toJson()).toList();
+    }
+    if (ingredients != null) {
+      data['ingredients'] = ingredients!.map((v) => v.toJson()).toList();
+    }
+    data['video_link'] = videoLink;
+    // if (categories != null) {
+    //   data['categories'] = categories!.map((v) => v.toJson()).toList();
+    // }
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
+    return data;
+  }
 }
 
 class Author {

@@ -1,4 +1,5 @@
 import 'package:cook_with_me/fonts_and_colors.dart';
+import 'package:cook_with_me/model/post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,14 +12,18 @@ class PostWidgetController extends GetxController {
 }
 
 class PostWidget extends GetView<PostWidgetController> {
-  PostWidget({super.key}) {
+  Post post;
+  PostWidget({required this.post, super.key}) {
     Get.lazyPut<PostWidgetController>(() => PostWidgetController());
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed("/detail_item"),
+      onTap: () => Get.toNamed(
+        "/detail_item",
+        arguments: {"post": post},
+      ),
       child: Container(
         height: 150,
         width: 150,
@@ -45,12 +50,16 @@ class PostWidget extends GetView<PostWidgetController> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-              child: Text(
-                "Meat Fried ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: FontsAndColors.semibold,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  post.title ?? "",
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: FontsAndColors.semibold,
+                  ),
                 ),
               ),
             ),
@@ -59,22 +68,32 @@ class PostWidget extends GetView<PostWidgetController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "@Alimeno",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontFamily: FontsAndColors.regular,
+                  Expanded(
+                    flex: 3,
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Text(
+                        post.author!.email ?? "@Alimeno",
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: FontsAndColors.regular,
+                        ),
+                      ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => controller.onTapChangeFavorite(),
-                    child: Obx(() => controller.isFavorite.value == true
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          )
-                        : const Icon(Icons.favorite_border_outlined)),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () => controller.onTapChangeFavorite(),
+                      child: Obx(() => controller.isFavorite.value == true
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            )
+                          : const Icon(Icons.favorite_border_outlined)),
+                    ),
                   ),
                 ],
               ),

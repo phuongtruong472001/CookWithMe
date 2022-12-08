@@ -36,7 +36,7 @@ class FavoritePage extends GetView<FavoriteController> {
                             mainAxisExtent: 150),
                     itemCount: controller.lenght.value,
                     itemBuilder: (BuildContext context, int index) {
-                      return PostWidget();
+                      return Container();
                     }),
               ),
             ),
