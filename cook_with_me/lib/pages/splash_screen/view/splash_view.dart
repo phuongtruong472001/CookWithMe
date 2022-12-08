@@ -25,18 +25,21 @@ class SplashPage extends GetView<SplashController> {
               left: 0,
               right: 0,
               height: 50,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                    color: const Color(0xFFFD1616),
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Center(
-                    child: Text(
-                  "LOGIN",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
+              child: GestureDetector(
+                onTap: () =>Get.toNamed("/login"),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  width: double.infinity,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFFD1616),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                      child: Text(
+                    "LOGIN",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ),
               ),
             ),
             Positioned(
