@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../model/call_api.dart';
 import '../controller/forgot_password_controller.dart';
 
 class ForgotPasswordPage extends GetView<ForgotPasswordController> {
@@ -56,13 +57,17 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (controller.key.currentState!.validate()) {
                           controller.key.currentState!.save();
-                          showAlertDialog(context);
+                          bool statusCheckOTP = await CallApi.sendOTP(
+                              controller.emailController.value.text);
+                          if (statusCheckOTP) {
+                            showAlertDialog(context);
+                          }
                         }
                       },
-                      child: const Text('Login'),
+                      child: const Text('Confirm'),
                     ),
                   ),
                 ),
@@ -85,9 +90,14 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
     );
     Widget continueButton = TextButton(
       child: const Text("Continue"),
-      onPressed: () {
+      onPressed: () async {
         if (controller.key.currentState!.validate()) {
           controller.key.currentState!.save();
+          bool statusCheckOTP =
+              await CallApi.checkOTP(controller.emailController.value.text,controller.otpController.value.text);
+          if (statusCheckOTP) {
+            Get.toNamed("/change_password");
+          }
         }
       },
     );

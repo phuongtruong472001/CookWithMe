@@ -5,4 +5,6 @@ class API {
   static String linkRegister = "${baseLink}auth/register";
   static String checkOTP = "${baseLink}auth/checkotp";
   static String getProfile = "${baseLink}auth/getMe";
+  static String sendOTP = "${baseLink}auth/fogotpassword";
+  static String linkCategory = "${baseLink}category";
 }
