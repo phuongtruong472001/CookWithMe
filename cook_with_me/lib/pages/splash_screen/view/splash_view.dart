@@ -51,19 +51,24 @@ class SplashPage extends GetView<SplashController> {
               left: 0,
               right: 0,
               height: 50,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed("/sign_up");
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  width: double.infinity,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                      child: Text(
+                    "SIGN UP",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
                 ),
-                child: const Center(
-                    child: Text(
-                  "SIGN UP",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
               ),
             ),
           ],

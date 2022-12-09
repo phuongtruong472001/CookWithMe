@@ -1,11 +1,7 @@
-import 'package:cook_with_me/fonts_and_colors.dart';
 import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/pages/login_screen/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-
-import '../../snack_bar.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key}) {
@@ -78,6 +74,7 @@ class LoginView extends GetView<LoginController> {
                         child: Obx(
                           () => TextFormField(
                             controller: controller.passController.value,
+                            obscureText: true,
                             style: const TextStyle(color: Colors.red),
                             decoration: InputDecoration(
                               filled: true,
@@ -106,12 +103,16 @@ class LoginView extends GetView<LoginController> {
                           children: [
                             Row(
                               children: [
-                                Checkbox(
-                                    activeColor: Colors.white,
-                                    value: true,
-                                    onChanged: (bool? value) {
-                                      print("check box was checked");
-                                    }),
+                                Obx(
+                                  () => Checkbox(
+                                      //activeColor: Colors.white,
+                                      checkColor: Colors.greenAccent,
+                                      activeColor: Colors.red,
+                                      value: controller.isRemmenber.value,
+                                      onChanged: (bool? value) {
+                                        controller.isRemmenber.value = value!;
+                                      }),
+                                ),
                                 const Text(
                                   "Remember me",
                                   style: TextStyle(
@@ -159,19 +160,24 @@ class LoginView extends GetView<LoginController> {
                       const SizedBox(
                         height: 50,
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        width: double.infinity,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed("/sign_up");
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            "Create new account",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
                         ),
-                        child: const Center(
-                            child: Text(
-                          "Create new account",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
                       ),
                     ]),
               ),
