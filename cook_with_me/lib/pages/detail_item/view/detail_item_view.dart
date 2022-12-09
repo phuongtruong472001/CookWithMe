@@ -1,12 +1,16 @@
+import 'package:cook_with_me/pages/link_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../fonts_and_colors.dart';
+import '../../../model/post.dart';
 import '../controller/detail_item_controller.dart';
 
 class DetailItemPage extends GetView<DetailItemController> {
-  const DetailItemPage({Key? key}) : super(key: key);
+  String defaultImage = LinkImage.imageDefault;
+
+  DetailItemPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +26,15 @@ class DetailItemPage extends GetView<DetailItemController> {
                   Container(
                     height: 200,
                     width: Get.width,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      color: Colors.red,
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              controller.post.value.imageCover ?? defaultImage),
+                          fit: BoxFit.cover),
                     ),
                   ),
                   Padding(
@@ -88,38 +95,47 @@ class DetailItemPage extends GetView<DetailItemController> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 30),
-                    child: Text(
-                      '''medium yellow onion.
-      3 cloves. garlic.
-      1 tablespoon. olive oil.
-      1 pound. lean ground beef.
-      1 1/2 teaspoons. kosher salt, divided, plus more for the pasta water.
-      dried oregano.
-      freshly ground black pepper.
-      red pepper flakes (optional)''',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  Obx(
+                    () => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(bottom: 100, top: 10),
+                      itemBuilder: (context, index) {
+                        var ingredients =
+                            controller.post.value.ingredients ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 8, left: 16, right: 16),
+                          child: Text(
+                            ingredients[index].name ?? "",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: FontsAndColors.regular,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: controller.post.value.ingredients!.length,
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(bottom: 100, top: 10),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 8, left: 16, right: 16),
-                        child: item(),
-                      );
-                    },
-                    itemCount: 10,
-                  )
+                  Obx(
+                    () => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(bottom: 100, top: 10),
+                      itemBuilder: (context, index) {
+                        var steps = controller.post.value.steps ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 8, left: 16, right: 16),
+                          child: item(steps[index]),
+                        );
+                      },
+                      itemCount: controller.post.value.steps!.length,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -153,14 +169,20 @@ class DetailItemPage extends GetView<DetailItemController> {
     );
   }
 
-  Widget item() {
+  Widget item(Steps steps) {
+    String imageLink = steps.imageLink ?? defaultImage;
     return Column(
       children: [
-        const SizedBox(
+        Container(
           height: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+                image: NetworkImage(imageLink), fit: BoxFit.cover),
+          ),
         ),
         Text(
-          '''To make this spaghetti sauce, you’ll sauté chopped onion, minced garlic, lean ground beef, and classic .''',
+          steps.description ?? "",
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,

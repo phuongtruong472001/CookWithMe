@@ -34,6 +34,7 @@ class CallApi {
     }
     return listPosts;
   }
+
   static Future<List<Category>> fetchCategory() async {
     //print(prefs.getString("jwt"));
     //final token = prefs.getString("jwt");
@@ -77,6 +78,8 @@ class CallApi {
         box.write("tkn", data["data"]["token"]);
         EasyLoading.dismiss();
         return true;
+      } else {
+        EasyLoading.showError("Email or password not correct !");
       }
     } catch (_) {
       EasyLoading.showError("Co loi xay ra");
@@ -97,6 +100,7 @@ class CallApi {
           await post(Uri.parse(API.linkRegister), headers: headers, body: body);
       // var data = convert.jsonDecode(res.body);
       if (res.statusCode == 201) {
+        EasyLoading.dismiss();
         return true;
       } else {
         EasyLoading.showError("email not valid !");
