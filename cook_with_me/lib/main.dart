@@ -10,6 +10,8 @@ import 'package:cook_with_me/pages/login_screen/login_binding.dart';
 import 'package:cook_with_me/pages/login_screen/login_view.dart';
 import 'package:cook_with_me/pages/settings/binding/settings_binding.dart';
 import 'package:cook_with_me/pages/settings/view/settings_view.dart';
+import 'package:cook_with_me/pages/sign_up/binding/sign_up_binding.dart';
+import 'package:cook_with_me/pages/sign_up/view/sign_up_view.dart';
 import 'package:cook_with_me/pages/splash_screen/binding/splash_binding.dart';
 import 'package:cook_with_me/pages/splash_screen/view/splash_view.dart';
 import 'package:cook_with_me/pages/tab_bar_home/binding/tab_bar_home_binding.dart';
@@ -76,6 +78,10 @@ class MyApp extends StatelessWidget {
             name: "/detail_item",
             page: () => const DetailItemPage(),
             binding: DetailItemBinding()),
+            GetPage(
+            name: "/sign_up",
+            page: () =>  SignUpPage(),
+            binding: SignUpBinding()),
       ],
     );
   }

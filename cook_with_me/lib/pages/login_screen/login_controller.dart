@@ -7,10 +7,12 @@ class LoginController extends GetxController {
   final emailController = TextEditingController().obs;
   final passController = TextEditingController().obs;
   final box = GetStorage();
+  RxBool isRemmenber = false.obs;
   @override
   void onInit() {
     super.onInit();
   }
+
   @override
   void onClose() {
     emailController.value.dispose();
