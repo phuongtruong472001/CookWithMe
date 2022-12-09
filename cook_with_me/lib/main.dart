@@ -29,6 +29,7 @@ import 'package:hexcolor/hexcolor.dart';
 void main() async {
   await GetStorage.init();
   runApp(const MyApp());
+  configLoading();
 }
 
 void configLoading() {
@@ -49,7 +50,6 @@ void configLoading() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -59,8 +59,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/add_post',
-      initialBinding: AddPostBinding(),
+      initialRoute: '/login',
+      initialBinding: LoginBinding(),
+      builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
@@ -97,7 +98,7 @@ class MyApp extends StatelessWidget {
             binding: FavoriteBinding()),
         GetPage(
             name: "/detail_item",
-            page: () => const DetailItemPage(),
+            page: () => DetailItemPage(),
             binding: DetailItemBinding()),
         GetPage(
             name: "/add_post",

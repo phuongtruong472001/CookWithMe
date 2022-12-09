@@ -1,5 +1,3 @@
-
-
 import 'package:cook_with_me/model/category.dart';
 
 class Post {
@@ -14,6 +12,7 @@ class Post {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  bool isFavorite = false;
 
   Post(
       {this.sId,
@@ -30,20 +29,19 @@ class Post {
 
   Post.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    author =
-        json['author'] != null ?  Author.fromJson(json['author']) : null;
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
     title = json['title'];
     imageCover = json['image_cover'];
     if (json['steps'] != null) {
       steps = <Steps>[];
       json['steps'].forEach((v) {
-        steps!.add( Steps.fromJson(v));
+        steps!.add(Steps.fromJson(v));
       });
     }
     if (json['ingredients'] != null) {
       ingredients = <Ingredients>[];
       json['ingredients'].forEach((v) {
-        ingredients!.add( Ingredients.fromJson(v));
+        ingredients!.add(Ingredients.fromJson(v));
       });
     }
     videoLink = json['video_link'];
@@ -59,7 +57,7 @@ class Post {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
     if (author != null) {
       data['author'] = author!.toJson();
@@ -118,7 +116,7 @@ class Author {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
     data['email'] = email;
     data['fullname'] = fullname;
@@ -148,7 +146,7 @@ class Steps {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['name'] = name;
     data['description'] = description;
     data['image_link'] = imageLink;
@@ -173,7 +171,7 @@ class Ingredients {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['name'] = name;
     data['unit'] = unit;
     data['quantity'] = quantity;

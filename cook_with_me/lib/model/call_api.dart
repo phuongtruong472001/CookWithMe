@@ -1,5 +1,7 @@
 import 'dart:convert' as convert;
-
+import 'dart:io';
+import 'package:cook_with_me/model/post_services.dart';
+import 'package:dio/dio.dart' as Dio;
 import 'package:cook_with_me/model/API.dart';
 import 'package:cook_with_me/model/category.dart';
 import 'package:cook_with_me/model/post.dart';
@@ -34,6 +36,7 @@ class CallApi {
     }
     return listPosts;
   }
+
   static Future<List<Category>> fetchCategory() async {
     //print(prefs.getString("jwt"));
     //final token = prefs.getString("jwt");
@@ -77,6 +80,8 @@ class CallApi {
         box.write("tkn", data["data"]["token"]);
         EasyLoading.dismiss();
         return true;
+      } else {
+        EasyLoading.showError("Email or password not correct !");
       }
     } catch (_) {
       EasyLoading.showError("Co loi xay ra");
@@ -97,6 +102,7 @@ class CallApi {
           await post(Uri.parse(API.linkRegister), headers: headers, body: body);
       // var data = convert.jsonDecode(res.body);
       if (res.statusCode == 201) {
+        EasyLoading.dismiss();
         return true;
       } else {
         EasyLoading.showError("email not valid !");
@@ -156,5 +162,60 @@ class CallApi {
       return false;
     }
     return false;
+  }
+
+  // add a new post
+  static Future<bool> uploadNewFood(
+      String name,
+      String ingredient,
+      String step1,
+      String linkVideo,
+      File? fileImgFood,
+      File? fileImgStep1) async {
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    try {
+      if (name.isEmpty ||
+          ingredient.isEmpty ||
+          step1.isEmpty ||
+          linkVideo.isEmpty) {
+        print("emptyyyyyy");
+        return false;
+      }
+
+      Steps step = Steps(
+        name: "name",
+        description: "step1",
+        imageLink: await Dio.MultipartFile.fromFile(fileImgStep1!.path,
+            filename: fileImgStep1.path.split('/').last),
+      );
+
+      List<Steps> list = [];
+      list.add(step);
+      var ingredients =
+          Ingredients(name: "ingredient", quantity: 1, unit: "cf");
+      List<Ingredients> listIn = [];
+      listIn.add(ingredients);
+      print(list.toList());
+      print(listIn.toList());
+      print("shdf");
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "title": "Canh",
+        "videoLink": linkVideo,
+        "steps": list,
+        "ingredients": listIn,
+        "category": "6392b969899de4b4664beee9",
+        "imageCover": await Dio.MultipartFile.fromFile(fileImgFood!.path,
+            filename: fileImgFood.path.split('/').last),
+      });
+      bool result = await FoodServices.create(formData);
+      return result;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Lỗi khi thêm');
+      return false;
+    }
   }
 }

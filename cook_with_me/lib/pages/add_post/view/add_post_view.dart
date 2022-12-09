@@ -1,3 +1,4 @@
+import 'package:cook_with_me/model/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,18 +47,28 @@ class AddPostPage extends GetView<AddPostController> {
               horizontal: 20,
             ),
             child: Column(children: [
-              Obx(
-                () => DropdownButton(
-                  value: "Khai_vi",
-                  items: controller.menuItems,
-                  onChanged: (value) {
-                    print("select");
-                  },
-                ),
-              ),
+              Obx(() {
+                if (controller.menuItems.isNotEmpty) {
+                  controller.selectedDropdown.value =
+                      controller.menuItems[0].value ?? "Select category";
+                  return DropdownButton(
+                    value: controller.selectedDropdown.value,
+                    items: controller.menuItems,
+                    onChanged: (value) {
+                      controller.selectedDropdown.value = value!;
+                      print(value);
+                    },
+                  );
+                } else {
+                  return const SizedBox(
+                    height: 0,
+                  );
+                }
+              }),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
+                  controller: controller.nameController.value,
                   style: const TextStyle(color: Colors.red),
                   decoration: InputDecoration(
                     filled: true,
@@ -81,6 +92,7 @@ class AddPostPage extends GetView<AddPostController> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
+                  controller: controller.ingredientsController.value,
                   maxLines: 5,
                   style: const TextStyle(color: Colors.red),
                   decoration: InputDecoration(
@@ -105,6 +117,7 @@ class AddPostPage extends GetView<AddPostController> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
+                  controller: controller.step1Controller.value,
                   style: const TextStyle(color: Colors.red),
                   decoration: InputDecoration(
                     filled: true,
@@ -125,23 +138,39 @@ class AddPostPage extends GetView<AddPostController> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 40,
+              GestureDetector(
+                onTap: () {
+                  controller.getImage1(ImageSource.gallery);
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 40,
+                  ),
+                  height: 160,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Center(
+                    child: GetBuilder<AddPostController>(builder: (_) {
+                      return controller.image1 != null
+                          ? Image.file(
+                              controller.image1!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              "https://res.cloudinary.com/doeo0czgr/image/upload/v1670596801/jmhcxvfg68i3g1g1hgcr.png?fbclid=IwAR2pJX_83e4tN7O5fkNhZJgXzvors7Snna4GlZxNtz8os2aUX3EEN-827io",
+                              fit: BoxFit.fitWidth,
+                            );
+                    }),
+                  ),
                 ),
-                height: 160,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white),
-                child:
-                    Center(child: Image.asset("assets/images/ic_add_img.png")),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextFormField(
-                  obscureText: true,
+                  controller: controller.linkVideoController.value,
                   style: const TextStyle(color: Colors.red),
                   decoration: InputDecoration(
                     filled: true,
@@ -167,20 +196,44 @@ class AddPostPage extends GetView<AddPostController> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: 150,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF588A67),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: const Center(
-                            child: Text(
-                          "Add item",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
+                      GestureDetector(
+                        onTap: () async {
+                          bool x = await CallApi.uploadNewFood(
+                              controller.nameController.value.text,
+                              controller.ingredientsController.value.text,
+                              controller.step1Controller.value.text,
+                              controller.linkVideoController.value.text,
+                              controller.image,
+                              controller.image1);
+                          if (x) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Upload thành công"),
+                              duration: Duration(seconds: 2),
+                            ));
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Lỗi khi upload"),
+                              duration: Duration(seconds: 2),
+                            ));
+                          }
+                        },
+                        child: Container(
+                          width: 150,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: const Color(0xFF588A67),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Center(
+                              child: Text(
+                            "Add item",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
                       ),
                       Container(
                         width: 150,

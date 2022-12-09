@@ -9,22 +9,23 @@ class AddPostController extends GetxController {
   // get image food
   File? image;
   final picker = ImagePicker();
-  var text = "";
-  bool fileLoaded = false;
+  File? image1;
+  final picker1 = ImagePicker();
 // get category for dropdown
   var listCategory = List<Category>.empty().obs;
-
+  RxString selectedDropdown = "Select category".obs;
   var menuItems = List<DropdownMenuItem<String>>.empty().obs;
-  //   DropdownMenuItem(value: "Khai_vi", child: Text("Khai vi")),
-  //   DropdownMenuItem(value: "Mon_chinh", child: Text("Mon chinh")),
-  //   DropdownMenuItem(value: "Trang_mieng", child: Text("Trang mieng")),
-  //   DropdownMenuItem(value: "An_vat", child: Text("An vat")),
-  // ];
+
 //get name, Ingredients
+  final nameController = TextEditingController().obs;
+  final ingredientsController = TextEditingController().obs;
+  final step1Controller = TextEditingController().obs;
+  final linkVideoController = TextEditingController().obs;
 
   @override
   void onInit() async {
     listCategory.value = await CallApi.fetchCategory();
+    getDataCategoty();
     super.onInit();
   }
 
@@ -44,15 +45,35 @@ class AddPostController extends GetxController {
         return;
       }
       image = File(imageTemp.path);
-    } catch (_) {
-      print("sjgdf");
+    } catch (e) {
+      print(e);
+    }
+    update();
+  }
+  Future<void> getImage1(ImageSource source) async {
+    try {
+      final imageTemp =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (imageTemp == null) {
+        return;
+      }
+      image1 = File(imageTemp.path);
+    } catch (e) {
+      print(e);
     }
     update();
   }
 
   void getDataCategoty() {
     for (var cate in listCategory) {
-      menuItems.add(DropdownMenuItem(value: cate.sId, child: Text(cate.name??"")));
+      menuItems
+          .add(DropdownMenuItem(value: cate.sId, child: Text(cate.name ?? "")));
+    }
+  }
+
+  void changeValueDropdown(String value) {
+    if (value.isNotEmpty) {
+      selectedDropdown.value = value;
     }
   }
 }
