@@ -4,6 +4,8 @@ import 'package:cook_with_me/pages/change_password/binding/change_password_bindi
 import 'package:cook_with_me/pages/change_password/view/change_password_view.dart';
 import 'package:cook_with_me/pages/detail_item/binding/detail_item_binding.dart';
 import 'package:cook_with_me/pages/detail_item/view/detail_item_view.dart';
+import 'package:cook_with_me/pages/edit_post/binding/edit_post_binding.dart';
+import 'package:cook_with_me/pages/edit_post/view/edit_post_view.dart';
 import 'package:cook_with_me/pages/favorite/binding/favorite_binding.dart';
 import 'package:cook_with_me/pages/favorite/view/favorite_view.dart';
 import 'package:cook_with_me/pages/forgot_password/binding/forgot_password_binding.dart';
@@ -84,10 +86,14 @@ class MyApp extends StatelessWidget {
             name: "/add_post",
             page: () => const AddPostPage(),
             binding: AddPostBinding()),
-            GetPage(
+        GetPage(
             name: "/sign_up",
-            page: () =>  SignUpPage(),
+            page: () => const SignUpPage(),
             binding: SignUpBinding()),
+        GetPage(
+            name: "/edit_post",
+            page: () => const EditPostPage(),
+            binding: EditPostBinding()),
       ],
     );
   }
