@@ -91,4 +91,23 @@ class CallApi {
     }
     return false;
   }
+  static Future<bool> sendOTP(String email) async {
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    try {
+      String body = '{"email":"$email""}';
+      final res =
+          await post(Uri.parse(API.sendOTP), headers: headers, body: body);
+      print(res.statusCode);
+      // var data = convert.jsonDecode(res.body);
+      if (res.statusCode == 200) {
+        return true;
+      }
+    } catch (_) {
+      return false;
+    }
+    return false;
+  }
 }
