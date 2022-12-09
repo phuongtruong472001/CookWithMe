@@ -9,11 +9,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class CallApi {
-  static Future<List<Post>> fetchPost() async {
+  static Future<List<Post>> fetchPost(String url) async {
     //print(prefs.getString("jwt"));
     //final token = prefs.getString("jwt");
 
-    String url = API.linkPost;
+    //String url = API.linkPost;
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -24,7 +24,7 @@ class CallApi {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       List<dynamic> list = data["data"];
-      print(list);
+      //print(list);
       listPosts =
           list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
       EasyLoading.dismiss();
@@ -76,6 +76,8 @@ class CallApi {
       if (res.statusCode == 200) {
         var box = GetStorage();
         box.write("tkn", data["data"]["token"]);
+        box.write("user_id", data["data"]["user_id"]);
+        print(data["data"]["user_id"]);
         EasyLoading.dismiss();
         return true;
       } else {
