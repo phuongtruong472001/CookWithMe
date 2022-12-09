@@ -25,7 +25,9 @@ import 'package:hexcolor/hexcolor.dart';
 void main() async {
   await GetStorage.init();
   runApp(const MyApp());
+  configLoading();
 }
+
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -41,9 +43,9 @@ void configLoading() {
     ..userInteractions = true
     ..dismissOnTap = false;
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
 
   // This widget is the root of your application.
   @override
@@ -54,8 +56,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/splash',
-      initialBinding: SplashBinding(),
+      initialRoute: '/main_tabbar',
+      initialBinding: TabBarHomeBinding(),
+      builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
@@ -92,11 +95,11 @@ class MyApp extends StatelessWidget {
             binding: FavoriteBinding()),
         GetPage(
             name: "/detail_item",
-            page: () => const DetailItemPage(),
+            page: () => DetailItemPage(),
             binding: DetailItemBinding()),
-            GetPage(
+        GetPage(
             name: "/sign_up",
-            page: () =>  SignUpPage(),
+            page: () => const SignUpPage(),
             binding: SignUpBinding()),
       ],
     );

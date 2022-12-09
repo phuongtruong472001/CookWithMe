@@ -1,5 +1,6 @@
 import 'package:cook_with_me/fonts_and_colors.dart';
 import 'package:cook_with_me/model/post.dart';
+import 'package:cook_with_me/pages/link_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,11 +42,14 @@ class PostWidget extends GetView<PostWidgetController> {
           children: [
             Container(
               height: 93,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                color: Colors.red,
+                image: DecorationImage(
+                    image:
+                        NetworkImage(post.imageCover ?? LinkImage.imageDefault),
+                    fit: BoxFit.cover),
               ),
             ),
             Padding(
