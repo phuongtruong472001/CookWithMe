@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../model/call_api.dart';
 import '../controller/change_password_controller.dart';
 
 class ChangePasswordPage extends GetView<ChangePasswordController> {
@@ -61,9 +63,26 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                       ),
-                      onPressed: () {
-                        if (controller.key.currentState!.validate()) {
+                      onPressed: () async {
+                        
+                        String newPass =
+                            controller.newPasswordController.value.text;
+                        String confirmPass =
+                            controller.confirmPasswordConTroller.value.text;
+
+                        if (controller.key.currentState!.validate() &&
+                            (newPass == confirmPass)) {
                           controller.key.currentState!.save();
+                          bool statusRegister =
+                              await CallApi.signUp("", newPass);
+                          
+                          if (statusRegister) {
+                            Get.toNamed("/main_tabbar");
+                          } else {
+                            print("loi dang ky");
+                          }
+                        } else {
+                          print("false");
                         }
                       },
                       child: const Text('Change password'),
@@ -110,8 +129,17 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                     borderSide: const BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(16))),
             validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter the name.';
+              if (value!.isEmpty || value == "") {
+                return "Not empty !";
+              }
+
+              if (value.length < 8) {
+                return 'Password phải từ 8 kí tự trở lên';
+              }
+              if (!RegExp(
+                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                  .hasMatch(value)) {
+                return 'Password phải bao gồm: chữ hoa, thường, số và ký tự dặc biệt';
               }
               return null;
             },
