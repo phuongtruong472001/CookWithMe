@@ -6,5 +6,5 @@ class API {
   static String checkOTP = "${baseLink}auth/checkotp";
   static String getProfile = "${baseLink}auth/getMe";
   static String sendOTP = "${baseLink}auth/fogotpassword";
-  
+  static String linkCategory = "${baseLink}category";
 }

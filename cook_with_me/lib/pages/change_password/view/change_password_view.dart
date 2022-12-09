@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -63,6 +64,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                         ),
                       ),
                       onPressed: () async {
+                        
                         String newPass =
                             controller.newPasswordController.value.text;
                         String confirmPass =
@@ -73,6 +75,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                           controller.key.currentState!.save();
                           bool statusRegister =
                               await CallApi.signUp("", newPass);
+                          
                           if (statusRegister) {
                             Get.toNamed("/main_tabbar");
                           } else {

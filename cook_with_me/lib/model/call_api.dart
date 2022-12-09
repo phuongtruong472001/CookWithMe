@@ -1,13 +1,15 @@
 import 'dart:convert' as convert;
 
 import 'package:cook_with_me/model/API.dart';
+import 'package:cook_with_me/model/category.dart';
 import 'package:cook_with_me/model/post.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class CallApi {
-  static Future<List<Post>> fetchAreas() async {
+  static Future<List<Post>> fetchPost() async {
     //print(prefs.getString("jwt"));
     //final token = prefs.getString("jwt");
 
@@ -17,7 +19,7 @@ class CallApi {
       'Accept': 'application/json',
     };
     List<Post> listPosts = [];
-    //EasyLoading.show(status: "Đang lấy thông tin khu vực");
+    EasyLoading.show(status: "Loading...");
     try {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
@@ -25,7 +27,34 @@ class CallApi {
       print(list);
       listPosts =
           list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
+      EasyLoading.dismiss();
     } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+    }
+    return listPosts;
+  }
+  static Future<List<Category>> fetchCategory() async {
+    //print(prefs.getString("jwt"));
+    //final token = prefs.getString("jwt");
+
+    String url = API.linkCategory;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    List<Category> listPosts = [];
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone = await http.get(Uri.parse(url), headers: headers);
+      var data = convert.jsonDecode(respone.body);
+      List<dynamic> list = data["data"];
+      print(list);
+      listPosts =
+          list.isNotEmpty ? list.map((c) => Category.fromJson(c)).toList() : [];
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
       print("can't call api $error");
     }
     return listPosts;
@@ -33,6 +62,7 @@ class CallApi {
 
   // authen
   static Future<bool> login(String email, String password) async {
+    EasyLoading.show(status: "Loading...");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -45,15 +75,18 @@ class CallApi {
       if (res.statusCode == 200) {
         var box = GetStorage();
         box.write("tkn", data["data"]["token"]);
+        EasyLoading.dismiss();
         return true;
       }
     } catch (_) {
+      EasyLoading.showError("Co loi xay ra");
       return false;
     }
     return false;
   }
 
   static Future<bool> signUp(String email, String password) async {
+    EasyLoading.show(status: "Loading...");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -65,14 +98,18 @@ class CallApi {
       // var data = convert.jsonDecode(res.body);
       if (res.statusCode == 201) {
         return true;
+      } else {
+        EasyLoading.showError("email not valid !");
       }
     } catch (_) {
+      EasyLoading.showError("Co loi xay ra");
       return false;
     }
     return false;
   }
 
   static Future<bool> checkOTP(String email, String otp) async {
+    EasyLoading.show(status: "Loading...");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -84,14 +121,20 @@ class CallApi {
       print(res.statusCode);
       // var data = convert.jsonDecode(res.body);
       if (res.statusCode == 200) {
+        EasyLoading.dismiss();
         return true;
+      } else {
+        EasyLoading.showError("OTP not correct !");
       }
     } catch (_) {
+      EasyLoading.showError("Đã có lỗi xảy ra\nVui lòng thử lại sau");
       return false;
     }
     return false;
   }
+
   static Future<bool> sendOTP(String email) async {
+    EasyLoading.show(status: "Loading...");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -103,9 +146,13 @@ class CallApi {
       print(res.statusCode);
       // var data = convert.jsonDecode(res.body);
       if (res.statusCode == 200) {
+        EasyLoading.dismiss();
         return true;
+      } else {
+        EasyLoading.showError("Emai not correct !");
       }
     } catch (_) {
+      EasyLoading.showError("Đã có lỗi xảy ra\nVui lòng thử lại sau");
       return false;
     }
     return false;

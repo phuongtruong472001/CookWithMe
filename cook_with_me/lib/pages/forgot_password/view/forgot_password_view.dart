@@ -94,7 +94,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
         if (controller.key.currentState!.validate()) {
           controller.key.currentState!.save();
           bool statusCheckOTP =
-              await CallApi.sendOTP(controller.otpController.value.text);
+              await CallApi.checkOTP(controller.emailController.value.text,controller.otpController.value.text);
           if (statusCheckOTP) {
             Get.toNamed("/change_password");
           }
