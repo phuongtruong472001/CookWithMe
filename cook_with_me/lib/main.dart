@@ -30,6 +30,7 @@ void main() async {
   await GetStorage.init();
   runApp(const MyApp());
 }
+
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -45,10 +46,10 @@ void configLoading() {
     ..userInteractions = true
     ..dismissOnTap = false;
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/splash',
-      initialBinding: SplashBinding(),
+      initialRoute: '/add_post',
+      initialBinding: AddPostBinding(),
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(

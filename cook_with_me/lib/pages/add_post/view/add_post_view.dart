@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../controller/add_post_controller.dart';
-
-final List<DropdownMenuItem<String>> menuItems = const [
-  DropdownMenuItem(value: "Khai_vi", child: Text("Khai vi")),
-  DropdownMenuItem(value: "Mon_chinh", child: Text("Mon chinh")),
-  DropdownMenuItem(value: "Trang_mieng", child: Text("Trang mieng")),
-  DropdownMenuItem(value: "An_vat", child: Text("An vat")),
-];
 
 class AddPostPage extends GetView<AddPostController> {
   const AddPostPage({Key? key}) : super(key: key);
@@ -28,10 +22,22 @@ class AddPostPage extends GetView<AddPostController> {
             child: Container(
               height: 200,
               color: Colors.white,
-              child: Center(child: Image.asset("assets/images/ic_add_img.png")),
+              child: Center(
+                child: GetBuilder<AddPostController>(builder: (_) {
+                  return controller.image != null
+                      ? Image.file(
+                          controller.image!,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          "https://res.cloudinary.com/doeo0czgr/image/upload/v1670596801/jmhcxvfg68i3g1g1hgcr.png?fbclid=IwAR2pJX_83e4tN7O5fkNhZJgXzvors7Snna4GlZxNtz8os2aUX3EEN-827io",
+                          fit: BoxFit.fitWidth,
+                        );
+                }),
+              ),
             ),
             onTap: () {
-              
+              controller.getImage(ImageSource.gallery);
             },
           ),
           Padding(
@@ -40,12 +46,14 @@ class AddPostPage extends GetView<AddPostController> {
               horizontal: 20,
             ),
             child: Column(children: [
-              DropdownButton(
-                value: "Khai_vi",
-                items: menuItems,
-                onChanged: (value) {
-                  print("select");
-                },
+              Obx(
+                () => DropdownButton(
+                  value: "Khai_vi",
+                  items: controller.menuItems,
+                  onChanged: (value) {
+                    print("select");
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
