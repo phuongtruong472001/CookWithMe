@@ -56,14 +56,14 @@ class HomePage extends GetView<HomeController> {
                 child: Obx(() => ListView.builder(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 10),
-                      itemCount: controller.listPosts.length ,
+                      itemCount: controller.listRecommend.length ,
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: PostWidget(
-                              post: controller.listPosts[index],
+                              post: controller.listRecommend[index],
                             ));
                       },
                     )),

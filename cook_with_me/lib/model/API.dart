@@ -7,4 +7,6 @@ class API {
   static String getProfile = "${baseLink}auth/getMe";
   static String sendOTP = "${baseLink}auth/fogotpassword";
   static String linkCategory = "${baseLink}category";
+  static String linkRecommend = "${baseLink}recommend";
+  static String linkPostOfMe = "${baseLink}posts/user/";
 }

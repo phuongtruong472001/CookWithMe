@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/main_tabbar',
-      initialBinding: TabBarHomeBinding(),
+      initialRoute: '/login',
+      initialBinding: LoginBinding(),
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       getPages: [

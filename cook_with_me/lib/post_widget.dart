@@ -5,17 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PostWidgetController extends GetxController {
-  RxBool isFavorite = false.obs;
+  Post post;
+  PostWidgetController(this.post);
+  late RxBool isFavorite;
+  @override
+  void onInit() {
+    isFavorite = post.isFavorite.obs;
+    // TODO: implement onInit
+    super.onInit();
+  }
 
   void onTapChangeFavorite() {
     isFavorite.value = !(isFavorite.value);
+   
   }
 }
 
 class PostWidget extends GetView<PostWidgetController> {
   Post post;
   PostWidget({required this.post, super.key}) {
-    Get.lazyPut<PostWidgetController>(() => PostWidgetController());
+    Get.put(PostWidgetController(post));
   }
 
   @override
@@ -89,14 +98,16 @@ class PostWidget extends GetView<PostWidgetController> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: GestureDetector(
-                      onTap: () => controller.onTapChangeFavorite(),
-                      child: Obx(() => controller.isFavorite.value == true
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            )
-                          : const Icon(Icons.favorite_border_outlined)),
+                    child: Obx(
+                      () => GestureDetector(
+                        onTap: () => controller.onTapChangeFavorite(),
+                        child: controller.isFavorite.value == true
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : const Icon(Icons.favorite_border_outlined),
+                      ),
                     ),
                   ),
                 ],
