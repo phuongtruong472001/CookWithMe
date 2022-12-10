@@ -5,8 +5,10 @@ class ChangePasswordController extends GetxController {
   var newPasswordController = TextEditingController().obs;
   var confirmPasswordConTroller = TextEditingController().obs;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+   String email=Get.arguments["email"]??"";
   @override
   void onInit() {
+    
     super.onInit();
   }
 

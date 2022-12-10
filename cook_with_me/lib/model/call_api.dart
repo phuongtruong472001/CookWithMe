@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cook_with_me/model/post_services.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:cook_with_me/model/API.dart';
+import 'package:cook_with_me/model/account.dart';
 import 'package:cook_with_me/model/category.dart';
 import 'package:cook_with_me/model/post.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,11 +12,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class CallApi {
-  static Future<List<Post>> fetchPost() async {
+  static Future<List<Post>> fetchPost(String url) async {
     //print(prefs.getString("jwt"));
     //final token = prefs.getString("jwt");
 
-    String url = API.linkPost;
+    //String url = API.linkPost;
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -26,7 +27,7 @@ class CallApi {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       List<dynamic> list = data["data"];
-      print(list);
+      //print(list);
       listPosts =
           list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
       EasyLoading.dismiss();
@@ -63,6 +64,60 @@ class CallApi {
     return listPosts;
   }
 
+  static Future<Account> fetchMe() async {
+    //print(prefs.getString("jwt"));
+    var box = GetStorage();
+    final token = box.read("tkn");
+
+    String url = API.linkInforOfMe;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Token': "$token"
+    };
+    var account = Account();
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone = await http.get(Uri.parse(url), headers: headers);
+      var data = convert.jsonDecode(respone.body);
+      var list = data["data"];
+      print(list);
+      account = Account.fromJson(list);
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+    }
+    return account;
+  }
+
+  static Future<bool> logout() async {
+    //print(prefs.getString("jwt"));
+    var box = GetStorage();
+    final token = box.read("tkn");
+
+    String url = API.linkLogOut;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Token': "$token"
+    };
+
+    EasyLoading.show(status: "Log out...");
+    try {
+      final respone = await http.post(Uri.parse(url), headers: headers);
+      if (respone.statusCode == 200) {
+        EasyLoading.dismiss();
+        return true;
+      }
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+      return false;
+    }
+    return false;
+  }
+
   // authen
   static Future<bool> login(String email, String password) async {
     EasyLoading.show(status: "Loading...");
@@ -78,7 +133,34 @@ class CallApi {
       if (res.statusCode == 200) {
         var box = GetStorage();
         box.write("tkn", data["data"]["token"]);
+        box.write("user_id", data["data"]["user_id"]);
+        print(data["data"]["user_id"]);
         EasyLoading.dismiss();
+        return true;
+      } else {
+        EasyLoading.showError("Email or password not correct !");
+      }
+    } catch (_) {
+      EasyLoading.showError("Co loi xay ra");
+      return false;
+    }
+    return false;
+  }
+
+  static Future<bool> changePassword(String email, String password) async {
+    EasyLoading.show(status: "Loading...");
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    try {
+      String body = '{"email":"$email","password":"$password"}';
+      final res = await post(Uri.parse(API.changePassword),
+          headers: headers, body: body);
+
+      if (res.statusCode == 200) {
+        EasyLoading.showSuccess("Change password successed");
+        // EasyLoading.dismiss();
         return true;
       } else {
         EasyLoading.showError("Email or password not correct !");
@@ -146,7 +228,7 @@ class CallApi {
       'Accept': 'application/json',
     };
     try {
-      String body = '{"email":"$email""}';
+      String body = '{"email":"$email"}';
       final res =
           await post(Uri.parse(API.sendOTP), headers: headers, body: body);
       print(res.statusCode);
@@ -164,62 +246,32 @@ class CallApi {
     return false;
   }
 
-  // search
-  static Future<List<Post>> searchFood(String nameFood) async {
-    try {
-      List<Post> foods = await CallApi.fetchPost();
-      return foods.where((f) {
-        final nameFoodLower = f.title!.toLowerCase();
-        final searchLower = nameFood.toLowerCase();
-        return nameFoodLower.contains(searchLower);
-      }).toList();
-    } catch (ex) {
-      rethrow;
-    }
-  }
+  static Future<List<Post>> searchPost(String keySearch) async {
+    //print(prefs.getString("jwt"));
+    //final token = prefs.getString("jwt");
 
-  // add a new post
-  static Future<bool> uploadNewFood(
-      String name,
-      String ingredient,
-      String step1,
-      String linkVideo,
-      File? fileImgFood,
-      File? fileImgStep1) async {
+    //String url = API.linkPost;
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    try {
-      if (name.isEmpty ||
-          ingredient.isEmpty ||
-          step1.isEmpty ||
-          linkVideo.isEmpty) {
-        print("emptyyyyyy");
-        return false;
-      }
 
-      Steps step = Steps(
-        name: "name",
-        description: "step1",
-        imageLink: await Dio.MultipartFile.fromFile(fileImgStep1!.path,
-            filename: fileImgStep1.path.split('/').last),
-      );
-      Dio.FormData formData = Dio.FormData.fromMap({
-        "title": "Canh",
-        "videoLink": linkVideo,
-        "steps": ["name: 1"],
-        "ingredients": ["name: 2"],
-        "category": "6392b969899de4b4664beee9",
-        "imageCover": await Dio.MultipartFile.fromFile(fileImgFood!.path,
-            filename: fileImgFood.path.split('/').last),
-      });
-      bool result = await FoodServices.create(formData);
-      return result;
-    } catch (e) {
-      // ignore: avoid_print
-      print('Lỗi khi thêm');
-      return false;
+    List<Post> listPosts = [];
+    String url = "${API.linkSearchPost}?key=$keySearch";
+    print(url);
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone = await http.get(Uri.parse(url), headers: headers);
+      var data = convert.jsonDecode(respone.body);
+      List<dynamic> list = data["data"];
+      //print(list);
+      listPosts =
+          list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
     }
+    return listPosts;
   }
 }
