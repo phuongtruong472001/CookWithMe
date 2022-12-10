@@ -1,7 +1,5 @@
 import 'dart:convert' as convert;
-import 'dart:io';
-import 'package:cook_with_me/model/post_services.dart';
-import 'package:dio/dio.dart' as Dio;
+
 import 'package:cook_with_me/model/API.dart';
 import 'package:cook_with_me/model/account.dart';
 import 'package:cook_with_me/model/category.dart';
@@ -295,14 +293,15 @@ class CallApi {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Token': "$token"
+      'Token': '$token'
     };
 
     EasyLoading.show(status: "Loading...");
     try {
       final respone =
           await http.post(Uri.parse(url), headers: headers, body: body);
-      if (respone.statusCode == 201) {
+      print(respone.statusCode);
+      if (respone.statusCode == 201 || respone.statusCode == 204) {
         EasyLoading.dismiss();
         return true;
       } else {

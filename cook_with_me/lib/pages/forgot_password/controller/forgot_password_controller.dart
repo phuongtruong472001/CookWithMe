@@ -16,8 +16,8 @@ class ForgotPasswordController extends GetxController {
 
   @override
   void onClose() {
-    emailController.value.dispose();
-    otpController.value.dispose();
+    // emailController.value.dispose();
+    // otpController.value.dispose();
     super.onClose();
   }
   // String validatePassword(String value) {
