@@ -25,150 +25,7 @@ class HomePage extends GetView<HomeController> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Recommend',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'See All',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 170,
-                child: Obx(() => ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      itemCount: controller.listPosts.length ,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: PostWidget(
-                              post: controller.listPosts[index],
-                            ));
-                      },
-                    )),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'All food',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'See All',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 330,
-                child: Obx(
-                  () => GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 4, bottom: 20),
-                      //physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16.0,
-                              mainAxisSpacing: 16.0,
-                              mainAxisExtent: 150),
-                      itemCount: controller.listPosts.length ,
-                      itemBuilder: (BuildContext context, int index) {
-                        return PostWidget(
-                          post: controller.listPosts[index],
-                        );
-                      }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Recent View',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'See All',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontFamily: FontsAndColors.regular,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 150,
-                child: Obx(
-                  () => ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: controller.listPosts.length ,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: PostWidget(
-                          post: controller.listPosts[index],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              Obx((() => _buildBody(context)))
             ],
           ),
         ),
@@ -183,6 +40,10 @@ class HomePage extends GetView<HomeController> {
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: TextFormField(
+            onChanged: ((value) {
+              controller.keySearch.value = value.toString();
+              print(controller.keySearch.value);
+            }),
             controller: searchController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
@@ -195,7 +56,7 @@ class HomePage extends GetView<HomeController> {
             decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Enter your email!",
+                hintText: "Enter food name",
                 hintStyle: TextStyle(
                   color: HexColor("#C1C1C1"),
                   fontFamily: 'Nunito-Semibold',
@@ -213,6 +74,162 @@ class HomePage extends GetView<HomeController> {
               return null;
             },
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    if (controller.keySearch.value == "") {
+      return noKeySearch();
+    }
+    return Center(child: Text("key search =" "${controller.keySearch.value}"));
+  }
+
+  Widget noKeySearch() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Recommend',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'See All',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 170,
+          child: Obx(() => ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                itemCount: controller.listPosts.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: PostWidget(
+                        post: controller.listPosts[index],
+                      ));
+                },
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'All food',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'See All',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 330,
+          child: Obx(
+            () => GridView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 4, bottom: 20),
+                //physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                    mainAxisExtent: 150),
+                itemCount: controller.listPosts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return PostWidget(
+                    post: controller.listPosts[index],
+                  );
+                }),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Recent View',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'See All',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontFamily: FontsAndColors.regular,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 150,
+          child: Obx(
+            () => ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: controller.listPosts.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: PostWidget(
+                    post: controller.listPosts[index],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 30,
         ),
       ],
     );

@@ -164,6 +164,20 @@ class CallApi {
     return false;
   }
 
+  // search
+  static Future<List<Post>> searchFood(String nameFood) async {
+    try {
+      List<Post> foods = await CallApi.fetchPost();
+      return foods.where((f) {
+        final nameFoodLower = f.title!.toLowerCase();
+        final searchLower = nameFood.toLowerCase();
+        return nameFoodLower.contains(searchLower);
+      }).toList();
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
   // add a new post
   static Future<bool> uploadNewFood(
       String name,
@@ -191,21 +205,11 @@ class CallApi {
         imageLink: await Dio.MultipartFile.fromFile(fileImgStep1!.path,
             filename: fileImgStep1.path.split('/').last),
       );
-
-      List<Steps> list = [];
-      list.add(step);
-      var ingredients =
-          Ingredients(name: "ingredient", quantity: 1, unit: "cf");
-      List<Ingredients> listIn = [];
-      listIn.add(ingredients);
-      print(list.toList());
-      print(listIn.toList());
-      print("shdf");
       Dio.FormData formData = Dio.FormData.fromMap({
         "title": "Canh",
         "videoLink": linkVideo,
-        "steps": list,
-        "ingredients": listIn,
+        "steps": ["name: 1"],
+        "ingredients": ["name: 2"],
         "category": "6392b969899de4b4664beee9",
         "imageCover": await Dio.MultipartFile.fromFile(fileImgFood!.path,
             filename: fileImgFood.path.split('/').last),

@@ -7,6 +7,7 @@ import '../../../model/post.dart';
 class HomeController extends GetxController {
   var searchController = TextEditingController().obs;
   var listPosts = List<Post>.empty().obs;
+  var keySearch = "".obs;
   @override
   void onInit() async {
     listPosts.value = await CallApi.fetchPost();
