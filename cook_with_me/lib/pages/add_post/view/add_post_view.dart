@@ -198,26 +198,26 @@ class AddPostPage extends GetView<AddPostController> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          bool x = await CallApi.uploadNewFood(
-                              controller.nameController.value.text,
-                              controller.ingredientsController.value.text,
-                              controller.step1Controller.value.text,
-                              controller.linkVideoController.value.text,
-                              controller.image,
-                              controller.image1);
-                          if (x) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Upload thành công"),
-                              duration: Duration(seconds: 2),
-                            ));
-                          } else {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Lỗi khi upload"),
-                              duration: Duration(seconds: 2),
-                            ));
-                          }
+                          // bool x = await CallApi.uploadNewFood(
+                          //     controller.nameController.value.text,
+                          //     controller.ingredientsController.value.text,
+                          //     controller.step1Controller.value.text,
+                          //     controller.linkVideoController.value.text,
+                          //     controller.image,
+                          //     controller.image1);
+                          // if (x) {
+                          //   ScaffoldMessenger.of(context)
+                          //       .showSnackBar(const SnackBar(
+                          //     content: Text("Upload thành công"),
+                          //     duration: Duration(seconds: 2),
+                          //   ));
+                          // } else {
+                          //   ScaffoldMessenger.of(context)
+                          //       .showSnackBar(const SnackBar(
+                          //     content: Text("Lỗi khi upload"),
+                          //     duration: Duration(seconds: 2),
+                          //   ));
+                          // }
                         },
                         child: Container(
                           width: 150,

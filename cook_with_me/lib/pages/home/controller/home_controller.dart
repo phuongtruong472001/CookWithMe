@@ -9,15 +9,20 @@ class HomeController extends GetxController {
   var searchController = TextEditingController().obs;
   var listPosts = List<Post>.empty().obs;
   var keySearch = "".obs;
-  var listRecommend=List<Post>.empty().obs;
+  var listSearch = List<Post>.empty().obs;
+  var listRecommend = List<Post>.empty().obs;
   @override
   void onInit() async {
     listPosts.value = await CallApi.fetchPost(API.linkPost);
-    listRecommend.value=await CallApi.fetchPost(API.linkRecommend);
-
+    listRecommend.value = await CallApi.fetchPost(API.linkRecommend);
     super.onInit();
   }
 
   @override
   void onReady() {}
+
+  getListSearch(String keySearch) async{
+    listSearch.value = await CallApi.searchPost(keySearch);
+  }
+
 }

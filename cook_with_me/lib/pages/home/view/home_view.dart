@@ -1,3 +1,5 @@
+import 'package:cook_with_me/model/API.dart';
+import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,11 +23,11 @@ class HomePage extends GetView<HomeController> {
               const SizedBox(
                 height: 30,
               ),
-              search(controller.searchController.value),
+              Obx((() => search(controller.searchController.value))),
               const SizedBox(
                 height: 30,
               ),
-              Obx((() => _buildBody(context)))
+              Obx(() => _buildBody(context)),
             ],
           ),
         ),
@@ -54,6 +56,18 @@ class HomePage extends GetView<HomeController> {
               fontSize: 18.0,
             ),
             decoration: InputDecoration(
+                suffixIcon: controller.keySearch.value == ""
+                    ? Container(
+                        width: 0,
+                      )
+                    : IconButton(
+                        color: const Color.fromARGB(255, 81, 48, 67),
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          controller.keySearch.value = "";
+                          controller.searchController.value.clear();
+                        },
+                      ),
                 fillColor: Colors.white,
                 filled: true,
                 hintText: "Enter food name",
@@ -83,7 +97,25 @@ class HomePage extends GetView<HomeController> {
     if (controller.keySearch.value == "") {
       return noKeySearch();
     }
-    return Center(child: Text("key search =" "${controller.keySearch.value}"));
+    controller.getListSearch(controller.keySearch.value);
+    return Obx(
+      () => GridView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 4, bottom: 20),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 16.0,
+              mainAxisExtent: 150),
+          itemCount: controller.listSearch.length,
+          itemBuilder: (BuildContext context, int index) {
+            return PostWidget(
+              post: controller.listSearch[index],
+            );
+          }),
+    );
   }
 
   Widget noKeySearch() {
