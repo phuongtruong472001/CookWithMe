@@ -1,7 +1,11 @@
+import 'package:cook_with_me/pages/add_post/binding/add_post_binding.dart';
+import 'package:cook_with_me/pages/add_post/view/add_post_view.dart';
 import 'package:cook_with_me/pages/change_password/binding/change_password_binding.dart';
 import 'package:cook_with_me/pages/change_password/view/change_password_view.dart';
 import 'package:cook_with_me/pages/detail_item/binding/detail_item_binding.dart';
 import 'package:cook_with_me/pages/detail_item/view/detail_item_view.dart';
+import 'package:cook_with_me/pages/edit_post/binding/edit_post_binding.dart';
+import 'package:cook_with_me/pages/edit_post/view/edit_post_view.dart';
 import 'package:cook_with_me/pages/favorite/binding/favorite_binding.dart';
 import 'package:cook_with_me/pages/favorite/view/favorite_view.dart';
 import 'package:cook_with_me/pages/forgot_password/binding/forgot_password_binding.dart';
@@ -46,7 +50,6 @@ void configLoading() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -56,8 +59,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: HexColor("BCD6BE"),
       ),
-      initialRoute: '/login',
-      initialBinding: LoginBinding(),
+      initialRoute: '/splash',
+      initialBinding: SplashBinding(),
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       getPages: [
@@ -98,9 +101,17 @@ class MyApp extends StatelessWidget {
             page: () => DetailItemPage(),
             binding: DetailItemBinding()),
         GetPage(
+            name: "/add_post",
+            page: () => const AddPostPage(),
+            binding: AddPostBinding()),
+        GetPage(
             name: "/sign_up",
             page: () => const SignUpPage(),
             binding: SignUpBinding()),
+        GetPage(
+            name: "/edit_post",
+            page: () => const EditPostPage(),
+            binding: EditPostBinding()),
       ],
     );
   }

@@ -71,7 +71,9 @@ class AllFoodPage extends GetView<AllFoodController> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed("/add_post");
+                  },
                   child: const Text(
                     '+ ADD ITEM',
                     style: TextStyle(
