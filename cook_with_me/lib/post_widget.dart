@@ -1,34 +1,21 @@
 import 'package:cook_with_me/fonts_and_colors.dart';
+import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/model/post.dart';
 import 'package:cook_with_me/pages/link_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PostWidgetController extends GetxController {
+class PostWidget extends StatefulWidget {
   Post post;
-  PostWidgetController(this.post);
-  late RxBool isFavorite;
+  PostWidget({required this.post, super.key});
   @override
-  void onInit() {
-    isFavorite = post.isFavorite.obs;
-    // TODO: implement onInit
-    super.onInit();
-  }
-
-  void onTapChangeFavorite() {
-    isFavorite.value = !(isFavorite.value);
-   
-  }
+  PostWidgetState createState() => PostWidgetState();
 }
 
-class PostWidget extends GetView<PostWidgetController> {
-  Post post;
-  PostWidget({required this.post, super.key}) {
-    Get.put(PostWidgetController(post));
-  }
-
+class PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
+    Post post = widget.post;
     return GestureDetector(
       onTap: () => Get.toNamed(
         "/detail_item",
@@ -60,6 +47,29 @@ class PostWidget extends GetView<PostWidgetController> {
                         NetworkImage(post.imageCover ?? LinkImage.imageDefault),
                     fit: BoxFit.cover),
               ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () async {
+                      bool isAddToFavorite =
+                          await CallApi.addToFavorite(post);
+                      if(isAddToFavorite){
+                        setState(() {
+                        post.isFavorite = !post.isFavorite;
+                      });
+                      }
+                    },
+                    child: post.isFavorite == true
+                        ? const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : const Icon(Icons.favorite_border_outlined),
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
@@ -78,39 +88,17 @@ class PostWidget extends GetView<PostWidgetController> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Text(
-                        post.author!.email ?? "@Alimeno",
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: FontsAndColors.regular,
-                        ),
-                      ),
-                    ),
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  post.author!.email ?? "@Alimeno",
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: FontsAndColors.regular,
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Obx(
-                      () => GestureDetector(
-                        onTap: () => controller.onTapChangeFavorite(),
-                        child: controller.isFavorite.value == true
-                            ? const Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                              )
-                            : const Icon(Icons.favorite_border_outlined),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -119,3 +107,21 @@ class PostWidget extends GetView<PostWidgetController> {
     );
   }
 }
+// Expanded(
+//                     flex: 1,
+//                     child: Obx(
+//                       () => GestureDetector(
+//                         onTap: () {
+//                           setState(() {
+//                             post.isFavorite = !post.isFavorite;
+//                           });
+//                         },
+//                         child: post.isFavorite == true
+//                             ? const Icon(
+//                                 Icons.favorite,
+//                                 color: Colors.red,
+//                               )
+//                             : const Icon(Icons.favorite_border_outlined),
+//                       ),
+//                     ),
+//                   ),

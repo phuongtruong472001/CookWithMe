@@ -10,6 +10,8 @@ import 'package:cook_with_me/pages/favorite/binding/favorite_binding.dart';
 import 'package:cook_with_me/pages/favorite/view/favorite_view.dart';
 import 'package:cook_with_me/pages/forgot_password/binding/forgot_password_binding.dart';
 import 'package:cook_with_me/pages/forgot_password/view/forgot_password_view.dart';
+import 'package:cook_with_me/pages/home/binding/home_binding.dart';
+import 'package:cook_with_me/pages/home/view/home_view.dart';
 import 'package:cook_with_me/pages/login_screen/login_binding.dart';
 import 'package:cook_with_me/pages/login_screen/login_view.dart';
 import 'package:cook_with_me/pages/settings/binding/settings_binding.dart';
@@ -76,7 +78,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/settings",
-          page: () =>  SettingsPage(),
+          page: () => SettingsPage(),
           binding: SettingsBinding(),
         ),
         GetPage(
@@ -112,6 +114,7 @@ class MyApp extends StatelessWidget {
             name: "/edit_post",
             page: () => const EditPostPage(),
             binding: EditPostBinding()),
+        GetPage(name: "/home", page: () => HomePage(), binding: HomeBinding()),
       ],
     );
   }

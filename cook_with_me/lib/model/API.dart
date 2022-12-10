@@ -13,4 +13,9 @@ class API {
   static String changePassword = "${baseLink}auth/updatepassword";
   static String linkInforOfMe = "${baseLink}auth/getMe";
   static String linkSearchPost = "${baseLink}posts/search";
+
+  static String linkFavorite = "${baseLink}favorite/getList";
+  static String addFavorite = "${baseLink}favorite/add";
+  static String deleteFavorite = "${baseLink}favorite/delete";
+
 }

@@ -2,6 +2,7 @@ import 'package:cook_with_me/pages/link_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../fonts_and_colors.dart';
 import '../../../model/post.dart';
@@ -151,7 +152,7 @@ class DetailItemPage extends GetView<DetailItemController> {
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: ()=>launchURL(),
                 child: Text(
                   'WATCH VIDEO',
                   style: TextStyle(
@@ -192,5 +193,14 @@ class DetailItemPage extends GetView<DetailItemController> {
         )
       ],
     );
+  }
+
+  launchURL() async {
+    const url = 'https://www.youtube.com/watch?v=nD2k199_HBM&ab_channel=Nino%27sHome';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
