@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../model/call_api.dart';
@@ -30,7 +31,8 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       ),
                       const Text(
                         "Forgot password",
-                        style: TextStyle(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ],
                   ),
@@ -62,7 +64,10 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                           }
                         }
                       },
-                      child: const Text('Confirm'),
+                      child: const Text(
+                        'Confirm',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

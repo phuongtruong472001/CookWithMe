@@ -30,7 +30,8 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                       ),
                       const Text(
                         "Change Password",
-                        style: TextStyle(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ],
                   ),
@@ -76,7 +77,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                               controller.email, newPass);
 
                           if (statusRegister) {
-                            Get.toNamed("/main_tabbar");
+                            Get.toNamed("/login");
                           } else {
                             print("loi dang ky");
                           }
@@ -103,6 +104,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: TextFormField(
+            obscureText: true,
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(

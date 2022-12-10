@@ -97,7 +97,7 @@ class SignUpPage extends GetView<SignUpController> {
                         }
                       },
                       child: Text(
-                        'Sing up',
+                        'Sign up',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: FontsAndColors.semibold,
@@ -134,7 +134,7 @@ class SignUpPage extends GetView<SignUpController> {
               controller.emailController.value.text,
               controller.otpController.value.text);
           if (statusCheckOTP) {
-            Get.toNamed("/main_tabbar");
+            Get.toNamed("/login");
           }
         }
       },
