@@ -1,6 +1,7 @@
 import 'dart:convert' as convert;
 
 import 'package:cook_with_me/model/API.dart';
+import 'package:cook_with_me/model/account.dart';
 import 'package:cook_with_me/model/category.dart';
 import 'package:cook_with_me/model/post.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -61,6 +62,31 @@ class CallApi {
     return listPosts;
   }
 
+  static Future<Account> fetchMe() async {
+    //print(prefs.getString("jwt"));
+    //final token = prefs.getString("jwt");
+
+    String url = API.linkInforOfMe;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    Account account = Account();
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone = await http.get(Uri.parse(url), headers: headers);
+      var data = convert.jsonDecode(respone.body);
+      var list = data["data"];
+      print(list);
+      account = list.map((c) => Account.fromJson(c));
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+    }
+    return account;
+  }
+
   // authen
   static Future<bool> login(String email, String password) async {
     EasyLoading.show(status: "Loading...");
@@ -79,6 +105,31 @@ class CallApi {
         box.write("user_id", data["data"]["user_id"]);
         print(data["data"]["user_id"]);
         EasyLoading.dismiss();
+        return true;
+      } else {
+        EasyLoading.showError("Email or password not correct !");
+      }
+    } catch (_) {
+      EasyLoading.showError("Co loi xay ra");
+      return false;
+    }
+    return false;
+  }
+
+  static Future<bool> changePassword(String email, String password) async {
+    EasyLoading.show(status: "Loading...");
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    try {
+      String body = '{"email":"$email","password":"$password"}';
+      final res = await post(Uri.parse(API.changePassword),
+          headers: headers, body: body);
+
+      if (res.statusCode == 200) {
+        EasyLoading.showSuccess("Change password successed");
+        // EasyLoading.dismiss();
         return true;
       } else {
         EasyLoading.showError("Email or password not correct !");
@@ -146,7 +197,7 @@ class CallApi {
       'Accept': 'application/json',
     };
     try {
-      String body = '{"email":"$email""}';
+      String body = '{"email":"$email"}';
       final res =
           await post(Uri.parse(API.sendOTP), headers: headers, body: body);
       print(res.statusCode);

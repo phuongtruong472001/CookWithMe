@@ -11,20 +11,21 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Form(
-          key: controller.key,
-          child: Stack(
-            children: [
-              Positioned(
-                top: 20,
-                child: SizedBox(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Form(
+            key: controller.key,
+            child: Column(
+              children: [
+                SizedBox(
                   width: Get.width,
                   height: 80,
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                        },
                         icon: const Icon(Icons.arrow_back_ios),
                       ),
                       const Text(
@@ -34,18 +35,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     ],
                   ),
                 ),
-              ),
-              Positioned(
-                top: Get.height / 4,
-                child: SizedBox(
+                SizedBox(
                   height: Get.height / 2,
                   width: Get.width,
                   child: Obx(() => editEmail(controller.emailController.value)),
                 ),
-              ),
-              Positioned(
-                bottom: Get.height / 6,
-                child: SizedBox(
+                SizedBox(
                   width: Get.width,
                   child: Center(
                     child: TextButton(
@@ -61,7 +56,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                         if (controller.key.currentState!.validate()) {
                           controller.key.currentState!.save();
                           bool statusCheckOTP = await CallApi.sendOTP(
-                              controller.emailController.value.text);
+                              controller.emailController.value.text.trim());
                           if (statusCheckOTP) {
                             showAlertDialog(context);
                           }
@@ -71,9 +66,8 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     ),
                   ),
                 ),
-              ),
-              Positioned(child: Container())
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -93,10 +87,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
       onPressed: () async {
         if (controller.key.currentState!.validate()) {
           controller.key.currentState!.save();
-          bool statusCheckOTP =
-              await CallApi.checkOTP(controller.emailController.value.text,controller.otpController.value.text);
+          bool statusCheckOTP = await CallApi.checkOTP(
+              controller.emailController.value.text,
+              controller.otpController.value.text);
           if (statusCheckOTP) {
-            Get.toNamed("/change_password");
+            Get.toNamed("/change_password",
+                arguments: {"email": controller.emailController.value.text});
           }
         }
       },
