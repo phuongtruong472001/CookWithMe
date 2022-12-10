@@ -2,6 +2,7 @@ import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/pages/login_screen/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({super.key}) {
@@ -98,36 +99,18 @@ class LoginView extends GetView<LoginController> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Obx(
-                                  () => Checkbox(
-                                      //activeColor: Colors.white,
-                                      checkColor: Colors.greenAccent,
-                                      activeColor: Colors.red,
-                                      value: controller.isRemmenber.value,
-                                      onChanged: (bool? value) {
-                                        controller.isRemmenber.value = value!;
-                                      }),
-                                ),
-                                const Text(
-                                  "Remember me",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                              ],
-                            ),
-                            const Text(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () => Get.toNamed("/forgot_password"),
+                            child: const Text(
                               "Forgot Password?",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   decoration: TextDecoration.underline),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -135,10 +118,15 @@ class LoginView extends GetView<LoginController> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          bool x = await CallApi.login(
-                              controller.emailController.value.text,
-                              controller.passController.value.text);
+                          String email =
+                              controller.emailController.value.text.trim();
+                          String password =
+                              controller.passController.value.text.trim();
+                          bool x = await CallApi.login(email, password);
                           if (x) {
+                            var box = GetStorage();
+                            await box.write("email", email);
+                            await box.write("password", password);
                             Get.toNamed("/main_tabbar");
                           }
                         },

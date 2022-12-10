@@ -9,4 +9,6 @@ class API {
   static String linkCategory = "${baseLink}category";
   static String linkRecommend = "${baseLink}recommend";
   static String linkPostOfMe = "${baseLink}posts/user/";
+   static String changePassword = "${baseLink}auth/updatepassword";
+   static String linkInforOfMe = "${baseLink}auth/getMe";
 }
