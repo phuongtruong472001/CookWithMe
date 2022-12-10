@@ -34,9 +34,14 @@ class FavoritePage extends GetView<FavoriteController> {
                             crossAxisSpacing: 16.0,
                             mainAxisSpacing: 16.0,
                             mainAxisExtent: 150),
-                    itemCount: controller.lenght.value,
+                    itemCount: controller.listFavorites.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container();
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: PostWidget(
+                          post: controller.listFavorites[index],
+                        ),
+                      );
                     }),
               ),
             ),

@@ -15,10 +15,14 @@ class CallApi {
     //final token = prefs.getString("jwt");
 
     //String url = API.linkPost;
+    var box = GetStorage();
+    final token = box.read("tkn");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'Token': '$token'
     };
+
     List<Post> listPosts = [];
     EasyLoading.show(status: "Loading...");
     try {
@@ -51,7 +55,7 @@ class CallApi {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       List<dynamic> list = data["data"];
-      print(list);
+      //print(list);
       listPosts =
           list.isNotEmpty ? list.map((c) => Category.fromJson(c)).toList() : [];
       EasyLoading.dismiss();
@@ -79,7 +83,7 @@ class CallApi {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       var list = data["data"];
-      print(list);
+      //print(list);
       account = Account.fromJson(list);
       EasyLoading.dismiss();
     } catch (error) {
@@ -256,13 +260,13 @@ class CallApi {
 
     List<Post> listPosts = [];
     String url = "${API.linkSearchPost}?key=$keySearch";
-    print(url);
+
     EasyLoading.show(status: "Loading...");
     try {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       List<dynamic> list = data["data"];
-      //print(list);
+      //  print(list);
       listPosts =
           list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
       EasyLoading.dismiss();
@@ -271,5 +275,41 @@ class CallApi {
       print("can't call api $error");
     }
     return listPosts;
+  }
+
+  static Future<bool> addToFavorite(Post post) async {
+    //print(prefs.getString("jwt"));
+    var box = GetStorage();
+    final token = box.read("tkn");
+
+    String body = '{"post":"${post.sId}"}';
+    print(token + body);
+    String url;
+    if (post.isFavorite) {
+      url = API.deleteFavorite;
+    } else {
+      url = API.addFavorite;
+    }
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Token': "$token"
+    };
+
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone =
+          await http.post(Uri.parse(url), headers: headers, body: body);
+      if (respone.statusCode == 201) {
+        EasyLoading.dismiss();
+        return true;
+      } else {
+        EasyLoading.showError("Co loi xay ra");
+      }
+    } catch (error) {
+      print("can't call api $error");
+      return false;
+    }
+    return false;
   }
 }

@@ -14,91 +14,60 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          // BottomNavigationBarItem(
-          //   icon: SizedBox(
-          //     height: 27,
-          //     width: 27,
-          //     child: SvgPicture.asset(
-          //       controller.currentIndex.value == 0
-          //           ? "${LinkImage.icon}home2.svg"
-          //           : "${LinkImage.icon}home1.svg",
-          //       fit: BoxFit.fill,
-          //     ),
-          //   ),
-          //   label: 'Home',
-          // ),
-          BottomNavigationBarItem(
-            icon: SizedBox(
-              height: 27,
-              width: 27,
-              child: Icon(
-                Icons.home,
-                // SvgPicture.asset(
-                //   controller.currentIndex.value == 1
-                //       ? "${LinkImage.icon}material2.svg"
-                //       : "${LinkImage.icon}material1.svg",
-                // fit: BoxFit.fill,
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.home,
+                ),
               ),
+              label: 'Materials',
             ),
-            label: 'Materials',
-          ),
-          BottomNavigationBarItem(
-            icon: SizedBox(
-              height: 27,
-              width: 27,
-              child: Icon(
-                Icons.favorite,
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.favorite,
+                ),
               ),
+              label: 'Favorite',
             ),
-            //    SvgPicture.asset(
-            //     controller.currentIndex.value == 2
-            //         ? "${LinkImage.icon}setting2.svg"
-            //         : "${LinkImage.icon}setting1.svg",
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: SizedBox(
-              height: 27,
-              width: 27,
-              child: Icon(
-                Icons.person,
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.person,
+                ),
               ),
+              label: 'Profile',
             ),
-            //    SvgPicture.asset(
-            //     controller.currentIndex.value == 2
-            //         ? "${LinkImage.icon}setting2.svg"
-            //         : "${LinkImage.icon}setting1.svg",
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            label: 'Profile',
-          ),
-          
-        ],
-        currentIndex: controller.currentIndex.value,
-        selectedLabelStyle: TextStyle(
-            fontFamily: FontsAndColors.regular,
-            fontSize: 11,
-            color: Colors.red),
-        unselectedLabelStyle: TextStyle(
-            fontFamily: FontsAndColors.regular,
-            fontSize: 11,
-            color: Colors.black12),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.black12,
-        // unselectedFontSize: 11,
-        // selectedFontSize: 11,
-        onTap: (index) {
-          // controller.currentIndex.value = index;
-          controller.onItemTapped(index);
-        },
+          ],
+          currentIndex: controller.currentIndex.value,
+          selectedLabelStyle: TextStyle(
+              fontFamily: FontsAndColors.regular,
+              fontSize: 11,
+              color: Colors.red),
+          unselectedLabelStyle: TextStyle(
+              fontFamily: FontsAndColors.regular,
+              fontSize: 11,
+              color: Colors.black12),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.black12,
+          // unselectedFontSize: 11,
+          // selectedFontSize: 11,
+          onTap: (index) {
+            // controller.currentIndex.value = index;
+            controller.onItemTapped(index);
+          },
+        ),
       ),
       body: SafeArea(
           child: Obx(
@@ -108,7 +77,6 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
             HomePage(),
             FavoritePage(),
             AllFoodPage(),
-             
           ],
         ),
       )),
