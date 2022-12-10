@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/settings",
-          page: () => const SettingsPage(),
+          page: () =>  SettingsPage(),
           binding: SettingsBinding(),
         ),
         GetPage(

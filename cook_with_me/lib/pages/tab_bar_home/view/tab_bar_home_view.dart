@@ -78,23 +78,7 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
             // ),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
-            icon: SizedBox(
-              height: 27,
-              width: 27,
-              child: Icon(
-                Icons.settings,
-              ),
-            ),
-            //    SvgPicture.asset(
-            //     controller.currentIndex.value == 2
-            //         ? "${LinkImage.icon}setting2.svg"
-            //         : "${LinkImage.icon}setting1.svg",
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            label: 'Settings',
-          ),
+          
         ],
         currentIndex: controller.currentIndex.value,
         selectedLabelStyle: TextStyle(
@@ -124,7 +108,7 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
             HomePage(),
             FavoritePage(),
             AllFoodPage(),
-            const SettingsPage(),
+             
           ],
         ),
       )),

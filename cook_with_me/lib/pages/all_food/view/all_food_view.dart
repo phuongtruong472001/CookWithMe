@@ -1,3 +1,4 @@
+import 'package:cook_with_me/model/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -21,22 +22,41 @@ class AllFoodPage extends GetView<AllFoodController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
+                SizedBox(
                   height: 50,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () async {
+                          bool checkLogout = await CallApi.logout();
+                          if (checkLogout) {
+                            Get.offAllNamed("/login");
+                          }
+                        },
+                        icon: const Icon(Icons.logout)),
+                  ),
                 ),
-                Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red,
+                Obx(
+                  () => Container(
+                    width: 100,
+                    height: 100,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              controller.account.value.avatarLink ??
+                                  LinkImage.avatarDefault),
+                          fit: BoxFit.cover),
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                const Text("Meomeo123"),
+                Obx(
+                  () => Text(controller.account.value.email ?? ""),
+                ),
                 const SizedBox(
                   height: 50,
                 ),
