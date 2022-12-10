@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../link_image.dart';
 import '../controller/settings_controller.dart';
 
 class SettingsPage extends GetView<SettingsController> {
-  const SettingsPage({Key? key}) : super(key: key);
+  SettingsPage({Key? key}) : super(key: key) {
+    Get.put(SettingsController());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +21,27 @@ class SettingsPage extends GetView<SettingsController> {
               const SizedBox(
                 height: 50,
               ),
-              Container(
-                width: 100,
-                height: 100,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red,
+              Obx(
+                () => Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            controller.account.value.avatarLink ??
+                                LinkImage.avatarDefault),
+                        fit: BoxFit.cover),
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 5,
               ),
-              const Text("Meomeo123"),
-              const Text("Meomeo123@gmail.com"),
+              Obx(
+                () => Text(controller.account.value.email ?? ""),
+              ),
               const SizedBox(
                 height: 50,
               ),

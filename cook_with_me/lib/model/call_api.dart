@@ -64,27 +64,56 @@ class CallApi {
 
   static Future<Account> fetchMe() async {
     //print(prefs.getString("jwt"));
-    //final token = prefs.getString("jwt");
+    var box = GetStorage();
+    final token = box.read("tkn");
 
     String url = API.linkInforOfMe;
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'Token': "$token"
     };
-    Account account = Account();
+    var account = Account();
     EasyLoading.show(status: "Loading...");
     try {
       final respone = await http.get(Uri.parse(url), headers: headers);
       var data = convert.jsonDecode(respone.body);
       var list = data["data"];
       print(list);
-      account = list.map((c) => Account.fromJson(c));
+      account = Account.fromJson(list);
       EasyLoading.dismiss();
     } catch (error) {
       EasyLoading.showError("Co loi xay ra");
       print("can't call api $error");
     }
     return account;
+  }
+
+  static Future<bool> logout() async {
+    //print(prefs.getString("jwt"));
+    var box = GetStorage();
+    final token = box.read("tkn");
+
+    String url = API.linkLogOut;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Token': "$token"
+    };
+
+    EasyLoading.show(status: "Log out...");
+    try {
+      final respone = await http.post(Uri.parse(url), headers: headers);
+      if (respone.statusCode == 200) {
+        EasyLoading.dismiss();
+        return true;
+      }
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+      return false;
+    }
+    return false;
   }
 
   // authen
@@ -213,5 +242,34 @@ class CallApi {
       return false;
     }
     return false;
+  }
+
+  static Future<List<Post>> searchPost(String keySearch) async {
+    //print(prefs.getString("jwt"));
+    //final token = prefs.getString("jwt");
+
+    //String url = API.linkPost;
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    List<Post> listPosts = [];
+    String url = "${API.linkSearchPost}?key=$keySearch";
+    print(url);
+    EasyLoading.show(status: "Loading...");
+    try {
+      final respone = await http.get(Uri.parse(url), headers: headers);
+      var data = convert.jsonDecode(respone.body);
+      List<dynamic> list = data["data"];
+      //print(list);
+      listPosts =
+          list.isNotEmpty ? list.map((c) => Post.fromJson(c)).toList() : [];
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.showError("Co loi xay ra");
+      print("can't call api $error");
+    }
+    return listPosts;
   }
 }
