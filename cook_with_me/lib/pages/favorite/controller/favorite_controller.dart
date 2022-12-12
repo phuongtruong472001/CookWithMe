@@ -11,9 +11,10 @@ class FavoriteController extends GetxController {
   @override
   void onInit() async {
     var box = GetStorage();
+    loadData();
     //String token = box.read("tkn");
     //print(API.linkFavorite + token);
-    listFavorites.value = await CallApi.fetchPost(API.linkFavorite );
+
     super.onInit();
   }
 
@@ -23,5 +24,10 @@ class FavoriteController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  loadData() async {
+    
+    listFavorites.value = await CallApi.fetchPost(API.linkFavorite);
   }
 }

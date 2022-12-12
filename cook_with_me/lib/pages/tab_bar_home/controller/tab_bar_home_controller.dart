@@ -1,3 +1,5 @@
+import 'package:cook_with_me/pages/favorite/controller/favorite_controller.dart';
+import 'package:cook_with_me/pages/home/controller/home_controller.dart';
 import 'package:get/get.dart';
 
 class TabBarHomeController extends GetxController {
@@ -8,6 +10,8 @@ class TabBarHomeController extends GetxController {
 
   void onItemTapped(int index) {
     currentIndex.value = index;
-    update();
+    if (index == 1) {
+      Get.find<FavoriteController>().loadData();
+    }
   }
 }

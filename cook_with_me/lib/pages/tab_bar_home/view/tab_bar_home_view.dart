@@ -13,75 +13,72 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TabBarHomeController>(builder: (controller) {
-      return Scaffold(
-        bottomNavigationBar: Obx(
-          () => BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: SizedBox(
-                  height: 27,
-                  width: 27,
-                  child: Icon(
-                    Icons.home,
-                  ),
+    return Scaffold(
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.home,
                 ),
-                label: 'Materials',
               ),
-              BottomNavigationBarItem(
-                icon: SizedBox(
-                  height: 27,
-                  width: 27,
-                  child: Icon(
-                    Icons.favorite,
-                  ),
+              label: 'Materials',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.favorite,
                 ),
-                label: 'Favorite',
               ),
-              BottomNavigationBarItem(
-                icon: SizedBox(
-                  height: 27,
-                  width: 27,
-                  child: Icon(
-                    Icons.person,
-                  ),
+              label: 'Favorite',
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox(
+                height: 27,
+                width: 27,
+                child: Icon(
+                  Icons.person,
                 ),
-                label: 'Profile',
               ),
-            ],
-            currentIndex: controller.currentIndex.value,
-            selectedLabelStyle: TextStyle(
-                fontFamily: FontsAndColors.regular,
-                fontSize: 11,
-                color: Colors.red),
-            unselectedLabelStyle: TextStyle(
-                fontFamily: FontsAndColors.regular,
-                fontSize: 11,
-                color: Colors.black12),
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            selectedItemColor: Colors.red,
-            unselectedItemColor: Colors.black12,
-            // unselectedFontSize: 11,
-            // selectedFontSize: 11,
-            onTap: (index) {
-              // controller.currentIndex.value = index;
-              controller.onItemTapped(index);
-            },
-          ),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: controller.currentIndex.value,
+          selectedLabelStyle: TextStyle(
+              fontFamily: FontsAndColors.regular,
+              fontSize: 11,
+              color: Colors.red),
+          unselectedLabelStyle: TextStyle(
+              fontFamily: FontsAndColors.regular,
+              fontSize: 11,
+              color: Colors.black12),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.black12,
+          // unselectedFontSize: 11,
+          // selectedFontSize: 11,
+          onTap: (index) {
+            // controller.currentIndex.value = index;
+            controller.onItemTapped(index);
+          },
         ),
-        body: SafeArea(
-            child: Obx(
-          () => IndexedStack(
-            index: controller.currentIndex.value,
-            children: [
-              HomePage(),
-              FavoritePage(),
-              AllFoodPage(),
-            ],
-          ),
-        )),
-      );
-    });
+      ),
+      body: SafeArea(
+        child: Obx(() => IndexedStack(
+              index: controller.currentIndex.value,
+              children: [
+                HomePage(),
+                FavoritePage(),
+                AllFoodPage(),
+              ],
+            )),
+      ),
+    );
   }
 }
