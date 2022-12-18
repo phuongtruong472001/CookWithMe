@@ -51,14 +51,22 @@ class AddPostPage extends GetView<AddPostController> {
                 if (controller.menuItems.isNotEmpty) {
                   controller.selectedDropdown.value =
                       controller.menuItems[0].value ?? "Select category";
-                  return DropdownButton(
-                    value: controller.selectedDropdown.value,
-                    items: controller.menuItems,
-                    onChanged: (value) {
-                      controller.selectedDropdown.value = value!;
-                      print(value);
-                    },
-                  );
+                  return Container(
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Obx(
+                        () => DropdownButton(
+                            underline: Container(color: Colors.transparent),
+                            elevation: 16,
+                            dropdownColor: Colors.white,
+                            value: controller.selectedDropdown.value,
+                            items: controller.menuItems,
+                            onChanged: (value) {
+                              controller.selectedDropdown.value = value!;
+                            }),
+                      ));
                 } else {
                   return const SizedBox(
                     height: 0,
@@ -198,26 +206,8 @@ class AddPostPage extends GetView<AddPostController> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          // bool x = await CallApi.uploadNewFood(
-                          //     controller.nameController.value.text,
-                          //     controller.ingredientsController.value.text,
-                          //     controller.step1Controller.value.text,
-                          //     controller.linkVideoController.value.text,
-                          //     controller.image,
-                          //     controller.image1);
-                          // if (x) {
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(const SnackBar(
-                          //     content: Text("Upload thành công"),
-                          //     duration: Duration(seconds: 2),
-                          //   ));
-                          // } else {
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(const SnackBar(
-                          //     content: Text("Lỗi khi upload"),
-                          //     duration: Duration(seconds: 2),
-                          //   ));
-                          // }
+                          // controller.demoUpload();
+                          print("click add item button");
                         },
                         child: Container(
                           width: 150,

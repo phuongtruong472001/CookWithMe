@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cook_with_me/model/call_api.dart';
 import 'package:cook_with_me/model/category.dart';
+import 'package:cook_with_me/model/post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,7 +14,7 @@ class AddPostController extends GetxController {
   final picker1 = ImagePicker();
 // get category for dropdown
   var listCategory = List<Category>.empty().obs;
-  RxString selectedDropdown = "Select category".obs;
+  final selectedDropdown = "Select category".obs;
   var menuItems = List<DropdownMenuItem<String>>.empty().obs;
 
 //get name, Ingredients
@@ -50,6 +51,7 @@ class AddPostController extends GetxController {
     }
     update();
   }
+
   Future<void> getImage1(ImageSource source) async {
     try {
       final imageTemp =
@@ -66,14 +68,36 @@ class AddPostController extends GetxController {
 
   void getDataCategoty() {
     for (var cate in listCategory) {
-      menuItems
-          .add(DropdownMenuItem(value: cate.sId, child: Text(cate.name ?? "")));
+      menuItems.add(
+          DropdownMenuItem(value: cate.name, child: Text(cate.name ?? "")));
     }
   }
 
-  void changeValueDropdown(String value) {
-    if (value.isNotEmpty) {
-      selectedDropdown.value = value;
-    }
+  Future<void> demoUpload(String cate, String name, String ingre, String step, String linkVid) async {
+    Steps steps = Steps(
+        name: "Rán cá",
+        description: "Rán cá với dầu ăn",
+        imageLink:
+            "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg");
+    List<Steps> listStep = [];
+    listStep.add(steps);
+    Ingredients ingredients = Ingredients(
+      name: "Cá",
+      quantity: "1 con",
+    );
+    List<Ingredients> listIngre = [];
+    listIngre.add(ingredients);
+    Author author = Author(sId: "6393fc418be579e01a3190bb");
+    Post post = Post(
+        author: author,
+        title: "Cá rán",
+        imageCover:
+            "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg",
+        ingredients: listIngre,
+        steps: listStep,
+        videoLink:
+            "https://www.youtube.com/watch?v=LuthIO83abw&ab_channel=HandmadeVN");
+    print("click add item button");
+    // return;
   }
 }
