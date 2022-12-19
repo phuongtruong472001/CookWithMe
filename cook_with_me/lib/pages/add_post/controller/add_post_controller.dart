@@ -73,31 +73,34 @@ class AddPostController extends GetxController {
     }
   }
 
-  Future<void> demoUpload(String cate, String name, String ingre, String step, String linkVid) async {
-    Steps steps = Steps(
-        name: "Rán cá",
-        description: "Rán cá với dầu ăn",
-        imageLink:
-            "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg");
-    List<Steps> listStep = [];
-    listStep.add(steps);
-    Ingredients ingredients = Ingredients(
-      name: "Cá",
-      quantity: "1 con",
-    );
-    List<Ingredients> listIngre = [];
-    listIngre.add(ingredients);
-    Author author = Author(sId: "6393fc418be579e01a3190bb");
-    Post post = Post(
-        author: author,
-        title: "Cá rán",
-        imageCover:
-            "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg",
-        ingredients: listIngre,
-        steps: listStep,
-        videoLink:
-            "https://www.youtube.com/watch?v=LuthIO83abw&ab_channel=HandmadeVN");
-    print("click add item button");
-    // return;
-  }
+  // Future<void> demoUpload(File imgCover,String cate, String name, String ingre, String step, File imgStep,
+  //     String linkVid) async {
+  //   Steps steps1 = Steps();
+
+  //   // Steps steps = Steps(
+  //   //     name: "Rán cá",
+  //   //     description: "Rán cá với dầu ăn",
+  //   //     imageLink:
+  //   //         "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg");
+  //   // List<Steps> listStep = [];
+  //   // listStep.add(steps);
+  //   // Ingredients ingredients = Ingredients(
+  //   //   name: "Cá",
+  //   //   quantity: "1 con",
+  //   // );
+  //   // List<Ingredients> listIngre = [];
+  //   // listIngre.add(ingredients);
+  //   // Author author = Author(sId: "6393fc418be579e01a3190bb");
+  //   // Post post = Post(
+  //   //     author: author,
+  //   //     title: "Cá rán",
+  //   //     imageCover:
+  //   //         "https://sohanews.sohacdn.com/2015/4-ran-ca-3-1022-1423120629063.jpg",
+  //   //     ingredients: listIngre,
+  //   //     steps: listStep,
+  //   //     videoLink:
+  //   //         "https://www.youtube.com/watch?v=LuthIO83abw&ab_channel=HandmadeVN");
+  //   print("click add item button");
+  // return;
+  // }
 }

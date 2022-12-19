@@ -131,10 +131,10 @@ class Author {
 }
 
 class Steps {
-  String? name;
+  String? name ;
   String? description;
   String? imageLink;
-  String? sId;
+  String? sId ;
 
   Steps({name, description, imageLink, sId});
 

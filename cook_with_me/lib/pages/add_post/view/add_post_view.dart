@@ -206,8 +206,32 @@ class AddPostPage extends GetView<AddPostController> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          // controller.demoUpload();
-                          print("click add item button");
+                          var a = await CallApi.uploadPost(
+                              controller.image,
+                              "",
+                              controller.nameController.value.text.trim(),
+                              controller.ingredientsController.value.text
+                                  .trim(),
+                              controller.step1Controller.value.text.trim(),
+                              "https://www.youtube.com/watch?v=jwNjWv68BfI&ab_channel=HoshiPhan",
+                              controller.image1);
+                          if (a) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Upload thành công"),
+                              duration: Duration(seconds: 2),
+                            ));
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Lỗi khi upload"),
+                              duration: Duration(seconds: 2),
+                            ));
+                          }
                         },
                         child: Container(
                           width: 150,
