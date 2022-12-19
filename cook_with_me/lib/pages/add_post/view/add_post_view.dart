@@ -51,14 +51,22 @@ class AddPostPage extends GetView<AddPostController> {
                 if (controller.menuItems.isNotEmpty) {
                   controller.selectedDropdown.value =
                       controller.menuItems[0].value ?? "Select category";
-                  return DropdownButton(
-                    value: controller.selectedDropdown.value,
-                    items: controller.menuItems,
-                    onChanged: (value) {
-                      controller.selectedDropdown.value = value!;
-                      print(value);
-                    },
-                  );
+                  return Container(
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Obx(
+                        () => DropdownButton(
+                            underline: Container(color: Colors.transparent),
+                            elevation: 16,
+                            dropdownColor: Colors.white,
+                            value: controller.selectedDropdown.value,
+                            items: controller.menuItems,
+                            onChanged: (value) {
+                              controller.selectedDropdown.value = value!;
+                            }),
+                      ));
                 } else {
                   return const SizedBox(
                     height: 0,
@@ -198,26 +206,32 @@ class AddPostPage extends GetView<AddPostController> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          // bool x = await CallApi.uploadNewFood(
-                          //     controller.nameController.value.text,
-                          //     controller.ingredientsController.value.text,
-                          //     controller.step1Controller.value.text,
-                          //     controller.linkVideoController.value.text,
-                          //     controller.image,
-                          //     controller.image1);
-                          // if (x) {
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(const SnackBar(
-                          //     content: Text("Upload thành công"),
-                          //     duration: Duration(seconds: 2),
-                          //   ));
-                          // } else {
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(const SnackBar(
-                          //     content: Text("Lỗi khi upload"),
-                          //     duration: Duration(seconds: 2),
-                          //   ));
-                          // }
+                          var a = await CallApi.uploadPost(
+                              controller.image,
+                              "",
+                              controller.nameController.value.text.trim(),
+                              controller.ingredientsController.value.text
+                                  .trim(),
+                              controller.step1Controller.value.text.trim(),
+                              "https://www.youtube.com/watch?v=jwNjWv68BfI&ab_channel=HoshiPhan",
+                              controller.image1);
+                          if (a) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Upload thành công"),
+                              duration: Duration(seconds: 2),
+                            ));
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(context);
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Lỗi khi upload"),
+                              duration: Duration(seconds: 2),
+                            ));
+                          }
                         },
                         child: Container(
                           width: 150,

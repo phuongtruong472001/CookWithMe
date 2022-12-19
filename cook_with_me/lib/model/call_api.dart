@@ -1,13 +1,23 @@
 import 'dart:convert' as convert;
+<<<<<<< HEAD
 
+=======
+// import 'dart:convert';
+import 'dart:io';
+>>>>>>> PhuongHa
 import 'package:cook_with_me/model/API.dart';
 import 'package:cook_with_me/model/account.dart';
 import 'package:cook_with_me/model/category.dart';
 import 'package:cook_with_me/model/post.dart';
+import 'package:cook_with_me/pages/add_post/controller/post_services.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+// ignore: library_prefixes
+import 'package:dio/dio.dart' as Dio;
 
 class CallApi {
   static Future<List<Post>> fetchPost(String url) async {
@@ -313,4 +323,73 @@ class CallApi {
     }
     return false;
   }
+// get image link
+  static Future<String> upImage(File? file) async {
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    try {
+      String body = '{"file":$file}';
+      final res = await post(
+          Uri.parse(
+              "https://cookwithmebe-production.up.railway.app/image/upload"),
+          headers: headers,
+          body: body);
+      var data = convert.jsonDecode(res.body);
+      if (res.statusCode == 201) {
+        print("up anh ${data["status"]}");
+        return data["data"];
+      }
+      return "";
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+// using DIO
+  static Future<bool> uploadPost(File? fileImgPost, String cate, String name,
+      String ingre, String step, String link, File? fileImgStep) async {
+    try {
+      Map<String, dynamic> steps = {
+        "name": "Step1",
+        "description": step,
+        "imageLink": await CallApi.upImage(fileImgStep),
+        // "imageLink":
+        //     "https://i.pinimg.com/originals/6c/d5/51/6cd5515e7db2b976de0de66c5fdec4e6.jpg",
+      };
+      List<Map<String, dynamic>> listSteps = [];
+      listSteps.add(steps);
+      List<Steps> list1 = listSteps.map((e) => Steps.fromJson(e)).toList();
+      // use to json
+      Map<String, dynamic> ingredients = {
+        "name": ingre,
+      };
+      List<Map<String, dynamic>> listIngre = [];
+      listIngre.add(ingredients);
+      List<Ingredients> list2 =
+          listIngre.map((e) => Ingredients.fromJson(e)).toList();
+      var box = GetStorage();
+      final userID = box.read("user_id");
+
+      Map formData = {
+        "author": userID,
+        "title": name.toString(),
+        "image_cover":
+            "https://i.pinimg.com/originals/6c/d5/51/6cd5515e7db2b976de0de66c5fdec4e6.jpg",
+        // "image_cover": await Dio.MultipartFile.fromFile(fileImgPost!.path,
+        //     filename: fileImgPost.path.split('/').last),
+        "steps": list1[0].toJson(),
+        "ingredients": list2[0].toJson(),
+        "video_link": link,
+        "categories": ["6392b969899de4b4664beee9"]
+      };
+      bool result = await FoodServices.create(formData);
+      return result;
+    } catch (e) {
+      print("call_api $e");
+      return false;
+    }
+  }
+//
 }
