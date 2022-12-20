@@ -5,7 +5,6 @@ import 'package:cook_with_me/pages/home/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../settings/view/settings_view.dart';
 import '../controller/tab_bar_home_controller.dart';
 
 class TabBarHomePage extends GetView<TabBarHomeController> {
@@ -25,7 +24,7 @@ class TabBarHomePage extends GetView<TabBarHomeController> {
                   Icons.home,
                 ),
               ),
-              label: 'Materials',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: SizedBox(

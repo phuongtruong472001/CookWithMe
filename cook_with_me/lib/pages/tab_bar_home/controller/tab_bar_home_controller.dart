@@ -1,6 +1,5 @@
+import 'package:cook_with_me/pages/all_food/controller/all_food_controller.dart';
 import 'package:cook_with_me/pages/favorite/controller/favorite_controller.dart';
-import 'package:cook_with_me/pages/home/controller/home_controller.dart';
-import 'package:cook_with_me/pages/settings/controller/settings_controller.dart';
 import 'package:get/get.dart';
 
 class TabBarHomeController extends GetxController {
@@ -15,7 +14,7 @@ class TabBarHomeController extends GetxController {
       Get.find<FavoriteController>().loadData();
     }
     if (index == 2) {
-      Get.find<SettingsController>().loadData();
+      Get.find<AllFoodController>().callData();
     }
   }
 }

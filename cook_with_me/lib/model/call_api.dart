@@ -1,10 +1,7 @@
 import 'dart:convert' as convert;
-<<<<<<< HEAD
 
-=======
 // import 'dart:convert';
 import 'dart:io';
->>>>>>> PhuongHa
 import 'package:cook_with_me/model/API.dart';
 import 'package:cook_with_me/model/account.dart';
 import 'package:cook_with_me/model/category.dart';
@@ -354,7 +351,7 @@ class CallApi {
       Map<String, dynamic> steps = {
         "name": "Step1",
         "description": step,
-        "imageLink": await CallApi.upImage(fileImgStep),
+        "imageLink": "https://res.cloudinary.com/doeo0czgr/image/upload/v1671430914/glv9207ajkgjjn6jukrw.jpg",
         // "imageLink":
         //     "https://i.pinimg.com/originals/6c/d5/51/6cd5515e7db2b976de0de66c5fdec4e6.jpg",
       };
@@ -376,7 +373,7 @@ class CallApi {
         "author": userID,
         "title": name.toString(),
         "image_cover":
-            "https://i.pinimg.com/originals/6c/d5/51/6cd5515e7db2b976de0de66c5fdec4e6.jpg",
+            "https://res.cloudinary.com/doeo0czgr/image/upload/v1671430914/glv9207ajkgjjn6jukrw.jpg",
         // "image_cover": await Dio.MultipartFile.fromFile(fileImgPost!.path,
         //     filename: fileImgPost.path.split('/').last),
         "steps": list1[0].toJson(),

@@ -12,13 +12,17 @@ class AllFoodController extends GetxController {
   var box = GetStorage();
   @override
   void onInit() async {
-    account.value = (await CallApi.fetchMe());
+    callData();
     String id = box.read("user_id");
     listPosts.value = await CallApi.fetchPost(API.linkPostOfMe + id);
     List<Post> list = await CallApi.searchPost("trứng");
     print(list.length);
 
     super.onInit();
+  }
+
+  void callData() async {
+    account.value = (await CallApi.fetchMe());
   }
 
   @override
